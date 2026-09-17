@@ -109,7 +109,7 @@ export function CountryTabs({
                 <div className="rounded-3xl bg-indigo-950 p-6">
                   <p className="text-base leading-6 text-white">
                     <span className="font-semibold">{active.name}.</span>{" "}
-                    <span className="text-white/60">{active.teaser}</span>
+                    <span className="text-white/60">{active.hook}</span>
                   </p>
 
                   {activeLaws.length > 0 ? (
