@@ -8,6 +8,7 @@ import { TextWordReveal } from "@/components/motion/text-word-reveal";
 import { HeroLines } from "@/components/HeroLines";
 import { SectionTick } from "@/components/SectionTick";
 import { LinkButton } from "@/components/ui/texture-button";
+import { RadarAlertBar } from "@/components/RadarAlertBar";
 
 // Mismo orden que `countries` en lib/countries.ts (colombia, chile, peru,
 // mexico): así el índice activo de CountryTabs se puede pasar tal cual a
@@ -58,6 +59,8 @@ export default function Hero() {
             Ver mi diagnóstico
             <ArrowRight className="size-4" aria-hidden />
           </LinkButton>
+
+          <RadarAlertBar />
         </div>
 
         <div className="relative w-full min-w-0 md:flex-1">

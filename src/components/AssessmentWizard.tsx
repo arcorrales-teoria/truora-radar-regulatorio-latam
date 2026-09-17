@@ -9,6 +9,7 @@ import { TextureCardStyled } from "@/components/ui/texture-card";
 import { LinkButton, TextureButton } from "@/components/ui/texture-button";
 import { cn } from "@/lib/utils";
 import { EASE_OUT } from "@/lib/ease";
+import { isCorporateEmail, isValidEmailFormat } from "@/lib/email";
 import {
   FINANCIAL_SUBCATEGORY_OPTIONS,
   PRODUCT_OPTIONS,
@@ -84,36 +85,6 @@ function TextField({
       />
     </label>
   );
-}
-
-/**
- * Dominios de correo personal/gratuitos: se usan para exigir un correo
- * CORPORATIVO en el gate de Hallazgos (pedido explícito del usuario), no
- * para validar deliverability real del correo.
- */
-const FREE_EMAIL_DOMAINS = new Set([
-  "gmail.com",
-  "hotmail.com",
-  "hotmail.es",
-  "outlook.com",
-  "outlook.es",
-  "yahoo.com",
-  "yahoo.es",
-  "icloud.com",
-  "live.com",
-  "aol.com",
-  "protonmail.com",
-]);
-
-function isValidEmailFormat(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
-
-function isCorporateEmail(value: string) {
-  const trimmed = value.trim().toLowerCase();
-  if (!isValidEmailFormat(trimmed)) return false;
-  const domain = trimmed.split("@")[1];
-  return !FREE_EMAIL_DOMAINS.has(domain);
 }
 
 function ProgressBar({ progress }: { progress: number }) {
