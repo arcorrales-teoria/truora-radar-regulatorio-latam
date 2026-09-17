@@ -14,12 +14,21 @@ import {
   TextureSeparator,
 } from "@/components/ui/texture-card";
 
-const COUNTRY_BADGE: Record<string, { code: string; color: string }> = {
-  colombia: { code: "CO", color: "#6366f1" },
-  chile: { code: "CL", color: "#3b82f6" },
-  peru: { code: "PE", color: "#10b981" },
-  mexico: { code: "MX", color: "#f43f5e" },
-};
+/**
+ * Ventana de referencia (en días) contra la que se mide la barra de "tiempo
+ * consumido": no es una fecha real de inicio de implementación (no existe
+ * ese dato en `Law`), es un proxy visual — entre más cerca el vencimiento,
+ * más llena la barra — pensado para leerse igual en los tres países aunque
+ * sus plazos reales sean distintos. Un solo acento (índigo) en vez de un
+ * semáforo de colores: así no se agrega un tono nuevo que "no combine" con
+ * el resto del sitio, la urgencia se lee en cuánto se llena, no en el color.
+ */
+const REFERENCE_WINDOW_DAYS = 180;
+const IMMINENT_THRESHOLD_DAYS = 90;
+
+function implementationProgress(daysLeft: number) {
+  return Math.min(100, Math.max(0, Math.round((1 - daysLeft / REFERENCE_WINDOW_DAYS) * 100)));
+}
 
 interface Remaining {
   d: number;
@@ -72,17 +81,18 @@ function LiveCountdown({ deadline, fallbackDays }: { deadline: string; fallbackD
 
 export function LawCountdownCard({ law }: { law: Law & { daysLeft: number } }) {
   const country = countries.find((c) => c.slug === law.countrySlug);
-  const badge = COUNTRY_BADGE[law.countrySlug] ?? { code: "??", color: "#737373" };
   const href = `/radar-regulatorio/${law.countrySlug}/${law.slug}`;
+  const isImminent = law.daysLeft <= IMMINENT_THRESHOLD_DAYS;
+  const progress = implementationProgress(law.daysLeft);
 
   return (
     <Link href={href} className="group block h-full transition-transform hover:-translate-y-0.5">
       <TextureCardStyled className="h-full">
-        <TextureCardHeader className="flex flex-col gap-3 px-7 pt-7 pb-4">
+        <TextureCardHeader className="flex flex-col gap-4 px-7 pt-7 pb-4">
           <div className="flex items-center justify-between gap-2">
             <TextureCardTitle className="text-lg">{country?.name}</TextureCardTitle>
-            {law.deadline && (
-              <span className="shrink-0 rounded-full bg-amber-400/15 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-amber-300 uppercase">
+            {isImminent && (
+              <span className="shrink-0 rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-indigo-300 uppercase">
                 Inminente
               </span>
             )}
@@ -98,6 +108,16 @@ export function LawCountdownCard({ law }: { law: Law & { daysLeft: number } }) {
               <div className="text-2xl leading-tight font-semibold text-white tabular-nums">{law.daysLeft}d</div>
             )}
           </div>
+
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center justify-between text-[10px] font-semibold tracking-[0.06em] text-white/40 uppercase">
+              <span>Plazo de implementación</span>
+              <span className="tabular-nums">{progress}%</span>
+            </div>
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+              <div className="h-full rounded-full bg-indigo-400" style={{ width: `${progress}%` }} />
+            </div>
+          </div>
         </TextureCardHeader>
 
         <TextureSeparator />
@@ -112,12 +132,7 @@ export function LawCountdownCard({ law }: { law: Law & { daysLeft: number } }) {
         <TextureSeparator />
 
         <TextureCardFooter className="px-7 py-5">
-          <span
-            className="flex size-5 items-center justify-center rounded-[4px] text-[7px] font-bold text-white"
-            style={{ background: badge.color }}
-          >
-            {badge.code}
-          </span>
+          <span className="text-xs text-white/40">{law.deadlineLabel ?? law.status}</span>
           <span className="inline-flex items-center gap-1 text-sm font-medium text-white/85 transition-colors group-hover:text-white">
             Ver detalle
             <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />

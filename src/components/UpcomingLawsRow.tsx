@@ -31,7 +31,7 @@ export function UpcomingLawsRow() {
             <span className="text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">Cronología</span>
             <h2 className="text-3xl font-medium text-white md:text-4xl">Próximos vencimientos</h2>
           </div>
-          <LinkButton href="/radar-regulatorio#test" variant="minimal" size="lg" className="w-fit shrink-0 text-neutral-900">
+          <LinkButton href="/radar-regulatorio#test" variant="glass" size="lg" className="w-fit shrink-0">
             Ver si mi empresa está lista
             <ArrowRight className="size-4" aria-hidden />
           </LinkButton>

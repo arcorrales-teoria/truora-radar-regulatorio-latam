@@ -40,9 +40,11 @@ interface LatamMapProps {
   activeIndex?: number;
 }
 
-const DIM_COUNTRY_COLOR = "rgba(67, 56, 202, 0.55)"; // indigo-700, más visible que antes (el fondo de la sección se volvió más saturado y el 0.30 anterior casi no se veía)
-const ACTIVE_COUNTRY_COLOR = "#4338ca"; // indigo-700, un poco más oscuro para que el salto activo/inactivo siga siendo claro incluso con el dim ya más fuerte
-const BG_DOT_COLOR = "rgba(67, 56, 202, 0.22)"; // antes casi negro al 10%, se perdía contra el fondo índigo — ahora mismo tono que el resto del mapa, más presente
+// Blanco en vez de índigo: "estas líneas y demás deben ser blancas, para que
+// contraste mejor" — el índigo se perdía contra el fondo azul medianoche.
+const DIM_COUNTRY_COLOR = "rgba(255, 255, 255, 0.35)";
+const ACTIVE_COUNTRY_COLOR = "rgba(255, 255, 255, 0.95)";
+const BG_DOT_COLOR = "rgba(255, 255, 255, 0.14)";
 
 export default function LatamMap({ stops, region, mapHeight = 130, activeIndex }: LatamMapProps) {
   const reduced = useReducedMotion();
@@ -143,9 +145,9 @@ export default function LatamMap({ stops, region, mapHeight = 130, activeIndex }
               key={`arc-${i}`}
               d={createCurvedPath(stop, next)}
               fill="none"
-              stroke="#818cf8"
+              stroke="#ffffff"
               strokeLinecap="round"
-              strokeOpacity={0.8}
+              strokeOpacity={0.55}
               strokeWidth={0.16 * unit}
               strokeDasharray={`${dash} ${gap}`}
             >

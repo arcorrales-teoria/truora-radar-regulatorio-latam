@@ -121,9 +121,9 @@ export default async function LawPage({
             </p>
             <LinkButton
               href={hasAssessment ? `/radar-regulatorio/${country.slug}/assessment` : "/radar-regulatorio#test"}
-              variant="minimal"
+              variant="glass"
               size="lg"
-              className="mt-5 w-fit text-neutral-900"
+              className="mt-5 w-fit"
             >
               Hacer el test
               <ArrowRight className="size-4" aria-hidden />

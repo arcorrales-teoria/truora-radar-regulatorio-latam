@@ -2,39 +2,27 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Adaptado de la referencia "TextureCard" que compartió el usuario: mismo
- * truco de bordes anidados (4 capas, cada una un pelo más chica) para dar
- * una sensación de bisel/profundidad. Un solo tema oscuro (índigo, para
- * coherencia con el resto de tarjetas oscuras del sitio).
- * Color sólido `indigo-950` ("azul medianoche"): el fondo de página ahora
- * también es azul medianoche (`#01022e`), así que esta card usa el mismo
- * registro de color en vez del `indigo-600` más brillante que se usó
- * cuando el fondo de página era blanco — pedido explícito de coherencia
- * ("estos cards también midnight blue").
+ * "Vidrio oscuro": borde sutil + relleno apenas más claro que el fondo azul
+ * medianoche (`bg-white/5`, sin color sólido) — mismo lenguaje que
+ * `TextureButton`'s `variant="glass"`, para que botones y cards dejen de
+ * sentirse como dos sistemas distintos ("los botones no parecen iguales,
+ * se sienten un poco perdidos"). Reemplaza el relleno sólido `indigo-950`
+ * que se usó cuando el fondo de página recién había vuelto a azul
+ * medianoche — con la página ya oscura, un panel también sólido se comía
+ * el contraste que sí tiene un borde translúcido.
  */
 
 const TextureCardStyled = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn("flex flex-col rounded-[24px] border border-black/40 bg-indigo-950", className)}
+    <div
+      ref={ref}
+      className={cn(
+        "flex flex-col rounded-[24px] border border-white/15 bg-white/5 shadow-[0px_1px_1px_rgba(0,0,0,0.2),0px_6px_14px_-4px_rgba(0,0,0,0.35)] text-white",
+        className,
+      )}
       {...props}
     >
-      {/*
-        `h-full flex flex-col` en CADA anillo, no solo en el más externo:
-        si solo el div raíz tiene `h-full`, los anillos internos (sin
-        altura propia) se quedan del alto de su contenido, así que el
-        contenido real (header/content/footer) nunca llega a estirarse
-        hasta el fondo de la card. Eso hacía que las cards con menos texto
-        (como Chile) mostraran el pie más arriba que las demás.
-      */}
-      <div className="flex h-full flex-col rounded-[23px] border border-black/30">
-        <div className="flex h-full flex-col rounded-[22px] border border-white/10">
-          <div className="flex h-full flex-col rounded-[21px] border border-black/20">
-            <div className="flex h-full w-full flex-col rounded-[20px] border border-white/5 text-white">
-              {children}
-            </div>
-          </div>
-        </div>
-      </div>
+      {children}
     </div>
   ),
 );

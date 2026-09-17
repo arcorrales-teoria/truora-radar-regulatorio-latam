@@ -30,7 +30,7 @@ export default function MegaMenu() {
                 className={cn(
                   "rounded-full px-3 py-1.5 text-sm transition-[transform,box-shadow,background-color] duration-150 active:scale-[0.96]",
                   active
-                    ? "bg-white font-semibold text-neutral-900 shadow-[0_1px_3px_rgba(0,0,0,0.3)]"
+                    ? "bg-white font-semibold shadow-[0_1px_3px_rgba(0,0,0,0.3)]"
                     : "font-normal text-white/60 hover:bg-white/10 hover:text-white",
                 )}
               >
@@ -40,7 +40,7 @@ export default function MegaMenu() {
           })}
         </nav>
 
-        <LinkButton href="/radar-regulatorio#test" variant="minimal" size="sm" className="hidden w-auto shrink-0 text-neutral-900 md:inline-flex">
+        <LinkButton href="/radar-regulatorio#test" variant="glass" size="sm" className="hidden w-auto shrink-0 md:inline-flex">
           Pon tu proceso bajo la lupa
         </LinkButton>
       </div>

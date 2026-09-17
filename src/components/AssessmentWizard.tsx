@@ -71,7 +71,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
         className={cn(
           "flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150",
           active
-            ? "bg-gradient-to-b from-white to-neutral-50 text-neutral-900 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.9)]"
+            ? "bg-gradient-to-b from-white to-neutral-50 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.9)]"
             : "text-white/70",
         )}
       >
@@ -341,7 +341,7 @@ export function AssessmentWizard({
                       ))}
                     </div>
 
-                    <TextureButton variant="minimal" size="lg" className="mt-8 w-fit text-neutral-900" onClick={() => goTo("intake", 1)}>
+                    <TextureButton variant="glass" size="lg" className="mt-8 w-fit" onClick={() => goTo("intake", 1)}>
                       Comenzar diagnóstico
                       <ArrowRight className="size-4" aria-hidden />
                     </TextureButton>
@@ -393,9 +393,9 @@ export function AssessmentWizard({
                     </div>
 
                     <TextureButton
-                      variant="minimal"
+                      variant="glass"
                       size="lg"
-                      className="mt-8 w-fit text-neutral-900 disabled:pointer-events-none disabled:opacity-40"
+                      className="mt-8 w-fit disabled:pointer-events-none disabled:opacity-40"
                       disabled={!canContinueIntake}
                       onClick={handleContinueIntake}
                     >
@@ -440,14 +440,14 @@ export function AssessmentWizard({
                     )}
 
                     <div className="mt-8 flex gap-3">
-                      <TextureButton variant="minimal" size="lg" className="w-fit text-neutral-900" onClick={() => goTo("intake", -1)}>
+                      <TextureButton variant="glass" size="lg" className="w-fit" onClick={() => goTo("intake", -1)}>
                         <ArrowLeft className="size-4" aria-hidden />
                         Atrás
                       </TextureButton>
                       <TextureButton
-                        variant="minimal"
+                        variant="glass"
                         size="lg"
-                        className="w-fit text-neutral-900 disabled:pointer-events-none disabled:opacity-40"
+                        className="w-fit disabled:pointer-events-none disabled:opacity-40"
                         disabled={!canContinueCompany}
                         onClick={handleContinueCompany}
                       >
@@ -476,7 +476,7 @@ export function AssessmentWizard({
                       ))}
                     </div>
 
-                    <TextureButton variant="minimal" size="lg" className="mt-8 w-fit text-neutral-900" onClick={() => goTo("company", -1)}>
+                    <TextureButton variant="glass" size="lg" className="mt-8 w-fit" onClick={() => goTo("company", -1)}>
                       <ArrowLeft className="size-4" aria-hidden />
                       Atrás
                     </TextureButton>
@@ -492,10 +492,10 @@ export function AssessmentWizard({
                       antecedentes. Para lo que buscas, un especialista de Truora te puede orientar mejor.
                     </p>
                     <div className="mt-6 flex flex-wrap gap-3">
-                      <LinkButton href="https://www.truora.com" variant="minimal" size="lg" className="w-fit text-neutral-900">
+                      <LinkButton href="https://www.truora.com" variant="glass" size="lg" className="w-fit">
                         Hablar con un especialista
                       </LinkButton>
-                      <TextureButton variant="minimal" size="lg" className="w-fit text-neutral-900" onClick={() => goTo("product", -1)}>
+                      <TextureButton variant="glass" size="lg" className="w-fit" onClick={() => goTo("product", -1)}>
                         <ArrowLeft className="size-4" aria-hidden />
                         Atrás
                       </TextureButton>
@@ -539,7 +539,7 @@ export function AssessmentWizard({
                       ))}
                     </div>
 
-                    <TextureButton variant="minimal" size="sm" className="mt-6 w-fit text-neutral-900" onClick={goBackQuestion}>
+                    <TextureButton variant="glass" size="sm" className="mt-6 w-fit" onClick={goBackQuestion}>
                       <ArrowLeft className="size-4" aria-hidden />
                       Atrás
                     </TextureButton>
@@ -637,10 +637,10 @@ export function AssessmentWizard({
                         )}
 
                         <div className="mt-8 flex flex-wrap gap-3">
-                          <LinkButton href="https://www.truora.com" variant="minimal" size="lg" className="w-fit text-neutral-900">
+                          <LinkButton href="https://www.truora.com" variant="glass" size="lg" className="w-fit">
                             Hablar con un especialista
                           </LinkButton>
-                          <LinkButton href="/radar-regulatorio" variant="minimal" size="lg" className="w-fit text-neutral-900">
+                          <LinkButton href="/radar-regulatorio" variant="glass" size="lg" className="w-fit">
                             Volver al radar
                           </LinkButton>
                         </div>
