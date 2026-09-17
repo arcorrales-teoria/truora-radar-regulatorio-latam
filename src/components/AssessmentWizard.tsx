@@ -64,17 +64,19 @@ function TextField({
   value,
   onChange,
   placeholder,
+  type = "text",
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  type?: "text" | "email";
 }) {
   return (
     <label className="flex flex-col gap-2">
       <span className="text-xs font-semibold tracking-[0.08em] text-white/50 uppercase">{label}</span>
       <input
-        type="text"
+        type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
@@ -82,6 +84,36 @@ function TextField({
       />
     </label>
   );
+}
+
+/**
+ * Dominios de correo personal/gratuitos: se usan para exigir un correo
+ * CORPORATIVO en el gate de Hallazgos (pedido explícito del usuario), no
+ * para validar deliverability real del correo.
+ */
+const FREE_EMAIL_DOMAINS = new Set([
+  "gmail.com",
+  "hotmail.com",
+  "hotmail.es",
+  "outlook.com",
+  "outlook.es",
+  "yahoo.com",
+  "yahoo.es",
+  "icloud.com",
+  "live.com",
+  "aol.com",
+  "protonmail.com",
+]);
+
+function isValidEmailFormat(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
+function isCorporateEmail(value: string) {
+  const trimmed = value.trim().toLowerCase();
+  if (!isValidEmailFormat(trimmed)) return false;
+  const domain = trimmed.split("@")[1];
+  return !FREE_EMAIL_DOMAINS.has(domain);
 }
 
 function ProgressBar({ progress }: { progress: number }) {
@@ -153,6 +185,9 @@ export function AssessmentWizard({
   const [subcategory, setSubcategory] = useState<FinancialSubcategory | null>(initialSubcategory ?? null);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(() => questions.map(() => null));
+  const [email, setEmail] = useState("");
+  const [emailUnlocked, setEmailUnlocked] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [ref, bounds] = useMeasure();
 
   // La industria llega resuelta por query param cuando se entra desde el
@@ -216,6 +251,19 @@ export function AssessmentWizard({
   const handleContinueContext = () => {
     if (!canContinueContext) return;
     goTo("processing", 1);
+  };
+
+  const handleUnlockResults = () => {
+    if (!isValidEmailFormat(email)) {
+      setEmailError("Ingresa un correo válido.");
+      return;
+    }
+    if (!isCorporateEmail(email)) {
+      setEmailError("Usa tu correo corporativo, no uno personal (Gmail, Hotmail, etc.).");
+      return;
+    }
+    setEmailError(null);
+    setEmailUnlocked(true);
   };
 
   // "Generando tu reporte": pausa breve y puramente visual antes de revelar
@@ -579,57 +627,98 @@ export function AssessmentWizard({
                     <span className="text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">
                       Hallazgos para {name1}
                     </span>
-                    <h2 className="mt-2 text-2xl font-medium text-white">
-                      {score} / {total} puntos
-                    </h2>
-                    <p className="mt-2 text-sm text-white/60">
-                      Esto no es un veredicto de cumplimiento legal: son brechas operativas frente a {assessment.lawLabel}.
-                    </p>
 
-                    {minimumGaps.length > 0 && (
-                      <div className="mt-6 flex items-start gap-3 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
-                        <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-400" aria-hidden />
-                        <span>
-                          {minimumGaps.length === 1 ? "Este punto es" : "Estos puntos son"} un requisito mínimo regulatorio de{" "}
-                          {assessment.lawLabel} — son los más urgentes de cerrar.
-                        </span>
-                      </div>
-                    )}
+                    {!emailUnlocked ? (
+                      <>
+                        <h2 className="mt-2 text-2xl font-medium text-white">Tu resultado está listo</h2>
+                        <p className="mt-2 text-sm text-white/60">
+                          Déjanos tu correo corporativo y te mostramos el detalle completo frente a {assessment.lawLabel}.
+                        </p>
 
-                    {gaps.length > 0 ? (
-                      <ul className="mt-4 flex flex-col gap-3">
-                        {gaps.map((f) => (
-                          <li key={f.id} className="flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3 text-sm text-white/80">
-                            <span
-                              className={cn("mt-0.5 size-1.5 shrink-0 rounded-full", f.isMinimum ? "bg-amber-400" : "bg-white/30")}
-                              aria-hidden
-                            />
-                            <span>
-                              {f.finding}
-                              {f.isMinimum && (
-                                <span className="ml-2 inline-block rounded-full bg-amber-400/15 px-2 py-0.5 text-[10px] font-semibold tracking-[0.06em] text-amber-300 uppercase">
-                                  Mínimo regulatorio
-                                </span>
-                              )}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                        <ul className="mt-6 flex flex-col gap-2.5">
+                          {["Nivel de impacto", "Áreas a revisar", "Recomendaciones"].map((item) => (
+                            <li key={item} className="flex items-center gap-2.5 text-sm text-white/80">
+                              <CheckCircle2 className="size-4 shrink-0 text-emerald-400" aria-hidden />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="mt-6 max-w-sm">
+                          <TextField
+                            label="Correo corporativo"
+                            type="email"
+                            value={email}
+                            onChange={(v) => {
+                              setEmail(v);
+                              if (emailError) setEmailError(null);
+                            }}
+                            placeholder="nombre@tuempresa.com"
+                          />
+                          {emailError && <p className="mt-2 text-sm text-red-300">{emailError}</p>}
+                        </div>
+
+                        <TextureButton variant="accent" size="lg" className="mt-6 w-fit" onClick={handleUnlockResults}>
+                          Ver mi resultado completo
+                          <ArrowRight className="size-4" aria-hidden />
+                        </TextureButton>
+                      </>
                     ) : (
-                      <div className="mt-6 flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3 text-sm text-white/80">
-                        <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-400" aria-hidden />
-                        No se identificaron brechas en las 10 preguntas de este diagnóstico.
-                      </div>
-                    )}
+                      <>
+                        <h2 className="mt-2 text-2xl font-medium text-white">
+                          {score} / {total} puntos
+                        </h2>
+                        <p className="mt-2 text-sm text-white/60">
+                          Esto no es un veredicto de cumplimiento legal: son brechas operativas frente a {assessment.lawLabel}.
+                          Te enviamos este mismo detalle a {email}.
+                        </p>
 
-                    <div className="mt-8 flex flex-wrap gap-3">
-                      <LinkButton href="https://www.truora.com" variant="accent" size="lg" className="w-fit">
-                        Hablar con un especialista
-                      </LinkButton>
-                      <LinkButton href="/radar-regulatorio" variant="secondary" size="lg" className="w-fit">
-                        Volver al radar
-                      </LinkButton>
-                    </div>
+                        {minimumGaps.length > 0 && (
+                          <div className="mt-6 flex items-start gap-3 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
+                            <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-400" aria-hidden />
+                            <span>
+                              {minimumGaps.length === 1 ? "Este punto es" : "Estos puntos son"} un requisito mínimo regulatorio de{" "}
+                              {assessment.lawLabel} — son los más urgentes de cerrar.
+                            </span>
+                          </div>
+                        )}
+
+                        {gaps.length > 0 ? (
+                          <ul className="mt-4 flex flex-col gap-3">
+                            {gaps.map((f) => (
+                              <li key={f.id} className="flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3 text-sm text-white/80">
+                                <span
+                                  className={cn("mt-0.5 size-1.5 shrink-0 rounded-full", f.isMinimum ? "bg-amber-400" : "bg-white/30")}
+                                  aria-hidden
+                                />
+                                <span>
+                                  {f.finding}
+                                  {f.isMinimum && (
+                                    <span className="ml-2 inline-block rounded-full bg-amber-400/15 px-2 py-0.5 text-[10px] font-semibold tracking-[0.06em] text-amber-300 uppercase">
+                                      Mínimo regulatorio
+                                    </span>
+                                  )}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="mt-6 flex items-start gap-3 rounded-xl bg-white/5 px-4 py-3 text-sm text-white/80">
+                            <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-400" aria-hidden />
+                            No se identificaron brechas en las 10 preguntas de este diagnóstico.
+                          </div>
+                        )}
+
+                        <div className="mt-8 flex flex-wrap gap-3">
+                          <LinkButton href="https://www.truora.com" variant="accent" size="lg" className="w-fit">
+                            Hablar con un especialista
+                          </LinkButton>
+                          <LinkButton href="/radar-regulatorio" variant="secondary" size="lg" className="w-fit">
+                            Volver al radar
+                          </LinkButton>
+                        </div>
+                      </>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
