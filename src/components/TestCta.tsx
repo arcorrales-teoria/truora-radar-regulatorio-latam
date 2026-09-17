@@ -98,7 +98,7 @@ export default function TestCta() {
                   className={cn(
                     "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-[color,background-color,border-color,transform] duration-150 active:scale-[0.96]",
                     subcategory === opt.value
-                      ? "border-white bg-white text-indigo-600"
+                      ? "border-white bg-white text-neutral-900"
                       : "border-white/15 text-white/70 hover:border-white/30 hover:bg-white/5",
                   )}
                 >
@@ -117,7 +117,7 @@ export default function TestCta() {
             onClick={handleContinue}
             disabled={!canContinue}
             className={cn(
-              "mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] bg-white px-6 py-3 text-sm font-medium text-indigo-600 shadow-[0px_1px_1px_rgba(20,21,38,0.1),0px_6px_14px_-4px_rgba(0,0,0,0.25)] transition-[opacity,transform] duration-150 active:scale-[0.96]",
+              "mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] bg-white px-6 py-3 text-sm font-medium text-neutral-900 shadow-[0px_1px_1px_rgba(20,21,38,0.1),0px_6px_14px_-4px_rgba(0,0,0,0.25)] transition-[opacity,transform] duration-150 active:scale-[0.96]",
               !canContinue && "pointer-events-none opacity-40",
             )}
           >

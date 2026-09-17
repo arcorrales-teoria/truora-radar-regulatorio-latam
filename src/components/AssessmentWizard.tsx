@@ -71,7 +71,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
         className={cn(
           "flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150",
           active
-            ? "bg-gradient-to-b from-white to-neutral-50 text-indigo-600 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.9)]"
+            ? "bg-gradient-to-b from-white to-neutral-50 text-neutral-900 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.9)]"
             : "text-white/70",
         )}
       >

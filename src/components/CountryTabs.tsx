@@ -78,7 +78,7 @@ export function CountryTabs({
               goTo(index);
             }}
             className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium transition sm:text-sm ${
-              activeTab === index ? "text-indigo-600" : "text-white/60 hover:text-white/90"
+              activeTab === index ? "text-neutral-900" : "text-white/60 hover:text-white/90"
             }`}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >

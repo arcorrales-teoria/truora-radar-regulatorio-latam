@@ -141,12 +141,12 @@ export function LawShowcase({ country, laws, children }: { country: CountryData;
                 >
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="text-[15px] font-semibold tracking-tight text-neutral-900">{current.lawName}</h3>
-                    <span className="shrink-0 rounded-full bg-indigo-50 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-indigo-600 uppercase">
+                    <span className="shrink-0 rounded-full bg-neutral-100 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-neutral-700 uppercase">
                       {country.name}
                     </span>
                   </div>
                   <p className="mt-3 text-[13.5px] leading-relaxed text-neutral-600">{current.text}</p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-indigo-600 transition-transform group-hover:translate-x-0.5">
+                  <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-neutral-900 transition-transform group-hover:translate-x-0.5">
                     Ver ley →
                   </span>
                 </Link>
