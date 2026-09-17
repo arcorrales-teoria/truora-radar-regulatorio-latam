@@ -1,0 +1,78 @@
+/*
+ * Orden de capas declarado ANTES que cualquier @import a propósito: mete lo
+ * que trae @raandino/atelier-tokens en la capa de MENOR prioridad posible.
+ * Ese paquete es CSS plano sin @layer propio — sin esto, reglas suyas como
+ * `a { color: var(--text-link) }` (el morado de marca de Truora) le ganan
+ * a CUALQUIER utility de Tailwind (`text-white` incluido) sin importar
+ * especificidad, porque en CSS lo sin-capa siempre gana a lo que sí tiene
+ * capa. Bug real que esto arregla: los links de país en MegaMenu salían
+ * morados/subrayados con el estilo de link de Truora en vez de blancos,
+ * pese a tener `text-white` explícito en el JSX. Solo se usa este paquete
+ * por la tipografía (Host Grotesk auto-hospedada): todo lo demás que trae
+ * (colores, box-shadow, radios) queda neutralizado por estar en la capa
+ * más baja, y nuestras propias reglas (incluido `@layer base` más abajo)
+ * siempre lo pisan.
+ */
+@layer atelier-tokens, theme, base, components, utilities;
+
+@import "tailwindcss";
+@import "@raandino/atelier-tokens/tokens.css" layer(atelier-tokens);
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+/*
+ * Todo lo de acá dentro va en @layer base a propósito: Tailwind v4 envuelve
+ * sus utilities en @layer, y en CSS los estilos SIN capa (unlayered) le
+ * ganan a CUALQUIER estilo con capa sin importar la especificidad. Un h2
+ * suelto acá afuera haría inútil cualquier `text-white` en un <h2> en toda
+ * la app (bug real: pasó en las preguntas del diagnóstico, texto negro
+ * forzado sobre fondo oscuro pese al `text-white` explícito en el JSX).
+ */
+@layer base {
+  body {
+    background: #ffffff;
+    color: #262626;
+    font: var(--body-font);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: var(--weight-medium);
+    color: #171717;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #e0e7ff;
+}
+
+@keyframes rail-flow {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 14px;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
