@@ -1,8 +1,10 @@
+import { ArrowRight } from "lucide-react";
 import { upcomingLaws } from "@/lib/laws";
 import { LawCountdownCard } from "@/components/LawCountdownCard";
 import { Reveal } from "@/components/Reveal";
 import { SectionLines } from "@/components/SectionLines";
 import { SectionTick } from "@/components/SectionTick";
+import { LinkButton } from "@/components/ui/texture-button";
 
 const LINES = [
   { d: "M -50 40 C 300 -30, 650 130, 1000 30 S 1500 90, 1750 10", dash: 6, gap: 10, duration: "9s", opacity: 0.3 },
@@ -24,12 +26,18 @@ export function UpcomingLawsRow() {
       <SectionLines lines={LINES} viewBox="0 0 1600 500" />
       <SectionTick />
       <div className="relative z-10 mx-auto max-w-[1560px] px-6 py-16 md:px-14 md:py-24 lg:px-20">
-        <Reveal className="mb-10 flex flex-col gap-3">
-          <span className="text-xs font-semibold tracking-[0.08em] text-indigo-900 uppercase">Cronología</span>
-          <h2 className="text-3xl font-medium text-neutral-900 md:text-4xl">Próximos vencimientos</h2>
+        <Reveal className="mb-10 flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-3">
+            <span className="text-xs font-semibold tracking-[0.08em] text-indigo-900 uppercase">Cronología</span>
+            <h2 className="text-3xl font-medium text-neutral-900 md:text-4xl">Próximos vencimientos</h2>
+          </div>
+          <LinkButton href="/radar-regulatorio#test" variant="accent" size="lg" className="w-fit shrink-0">
+            Ver si mi empresa está lista
+            <ArrowRight className="size-4" aria-hidden />
+          </LinkButton>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {laws.map((law, i) => (
             <Reveal key={`${law.countrySlug}-${law.slug}`} delay={0.1 + i * 0.1}>
               <LawCountdownCard law={law} />
