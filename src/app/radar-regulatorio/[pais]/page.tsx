@@ -69,12 +69,12 @@ export default async function CountryPage({
           </Reveal>
 
           <Reveal delay={0.1} className="shrink-0 self-center">
-            <CountryMap code={country.code} lat={country.lat} lng={country.lng} height={280} />
+            <CountryMap code={country.code} lat={country.lat} lng={country.lng} height={440} />
           </Reveal>
         </div>
 
         {countryLaws.length > 0 ? (
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
             {countryLaws.map((law, i) => (
               <Reveal key={law.slug} delay={i * 0.08}>
                 <Link
@@ -84,8 +84,37 @@ export default async function CountryPage({
                   <div>
                     <p className="text-base font-medium text-neutral-900">{law.nickname ?? law.name}</p>
                     <p className="mt-2 text-sm leading-[1.4] font-light text-neutral-600">{law.description}</p>
+
+                    {(law.whatChanged || law.whoItAffects || law.impact) && (
+                      <div className="mt-5 space-y-4 border-t border-neutral-100 pt-5">
+                        {law.whatChanged && (
+                          <div>
+                            <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-600 uppercase">
+                              Qué cambió
+                            </span>
+                            <p className="mt-1 text-sm leading-[1.4] font-light text-neutral-600">{law.whatChanged}</p>
+                          </div>
+                        )}
+                        {law.whoItAffects && (
+                          <div>
+                            <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-600 uppercase">
+                              A quién afecta
+                            </span>
+                            <p className="mt-1 text-sm leading-[1.4] font-light text-neutral-600">{law.whoItAffects}</p>
+                          </div>
+                        )}
+                        {law.impact && (
+                          <div>
+                            <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-600 uppercase">
+                              Impacto en el corto plazo
+                            </span>
+                            <p className="mt-1 text-sm leading-[1.4] font-light text-neutral-600">{law.impact}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-indigo-600">
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-indigo-600">
                     Ver detalle
                     <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
                   </span>
