@@ -26,7 +26,7 @@ export default function Hero() {
   const [activeCountry, setActiveCountry] = useState(0);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-indigo-50 to-indigo-200">
+    <section className="relative overflow-hidden bg-white">
     <HeroLines />
     <SectionTick />
     <div className="relative z-10 mx-auto flex max-w-[1560px] flex-col justify-center px-6 pt-24 pb-10 md:min-h-[86dvh] md:px-14 md:pt-28 md:pb-14 lg:px-20">

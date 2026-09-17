@@ -22,7 +22,7 @@ export function UpcomingLawsRow() {
   if (laws.length === 0) return null;
 
   return (
-    <section id="vencimientos" className="relative overflow-hidden bg-gradient-to-b from-indigo-200 to-indigo-300">
+    <section id="vencimientos" className="relative overflow-hidden bg-white">
       <SectionLines lines={LINES} viewBox="0 0 1600 500" />
       <SectionTick />
       <div className="relative z-10 mx-auto max-w-[1560px] px-6 py-16 md:px-14 md:py-24 lg:px-20">

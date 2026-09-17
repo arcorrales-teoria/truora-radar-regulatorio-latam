@@ -36,7 +36,7 @@ export function RegulationBand() {
 
   if (reduced) {
     return (
-      <div className="relative bg-indigo-200">
+      <div className="relative bg-white">
         <SectionTick />
         <SolidFrame className={BOX}>
           <p className="px-6 py-8 text-center text-base font-semibold tracking-[0.08em] text-indigo-900 uppercase">{MESSAGE}</p>
@@ -46,7 +46,7 @@ export function RegulationBand() {
   }
 
   return (
-    <div className="relative bg-indigo-200 py-8">
+    <div className="relative bg-white py-8">
       <SectionTick />
       <SolidFrame className={BOX}>
         <div className="flex w-max animate-[marquee_38s_linear_infinite] pl-6">

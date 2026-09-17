@@ -8,16 +8,14 @@ import { cn } from "@/lib/utils";
  * coherencia con el resto de tarjetas oscuras del sitio) en vez del
  * light/dark de la referencia, porque estas cards siempre van sobre fondo
  * claro como elementos oscuros intencionales, no cambian con el tema.
+ * Color sólido (no degradado indigo-900→950, ese leía como "azul medianoche"
+ * en vez de morado): un solo indigo-600, el mismo morado estandarizado que
+ * usan botones y líneas en el resto del sitio.
  */
 
 const TextureCardStyled = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        "flex flex-col rounded-[24px] border border-black/40 bg-gradient-to-b from-indigo-900 to-indigo-950",
-        className,
-      )}
+    <div ref={ref} className={cn("flex flex-col rounded-[24px] border border-black/40 bg-indigo-600", className)}
       {...props}
     >
       {/*

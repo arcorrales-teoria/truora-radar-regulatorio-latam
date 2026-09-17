@@ -39,11 +39,11 @@ export default function TestCta() {
   };
 
   return (
-    <section id="test" className="relative overflow-hidden bg-gradient-to-b from-indigo-400 to-indigo-700">
+    <section id="test" className="relative overflow-hidden bg-white">
       <SectionLines lines={LINES} viewBox="0 0 1600 520" />
       <SectionTick />
       <div className="relative z-10 mx-auto max-w-[1560px] px-6 py-16 md:px-14 md:py-24 lg:px-20">
-        <Reveal className="relative overflow-hidden rounded-[32px] bg-indigo-950 p-10 md:p-16">
+        <Reveal className="relative overflow-hidden rounded-[32px] bg-indigo-600 p-10 md:p-16">
           <div className="max-w-2xl">
             <span className="w-fit rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-[0.08em] text-white uppercase">
               Regulatory Impact Assessment
@@ -72,7 +72,7 @@ export default function TestCta() {
                     className={cn(
                       "flex flex-col items-start gap-1 rounded-2xl border px-5 py-4 text-left transition-[color,background-color,border-color,transform] duration-150 active:scale-[0.96]",
                       selected
-                        ? "border-indigo-400 bg-indigo-600/20"
+                        ? "border-white bg-white/15"
                         : "border-white/15 bg-white/5 hover:border-white/30 hover:bg-white/10",
                     )}
                   >
@@ -98,7 +98,7 @@ export default function TestCta() {
                   className={cn(
                     "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-[color,background-color,border-color,transform] duration-150 active:scale-[0.96]",
                     subcategory === opt.value
-                      ? "border-indigo-400 bg-indigo-600 text-white"
+                      ? "border-white bg-white text-indigo-600"
                       : "border-white/15 text-white/70 hover:border-white/30 hover:bg-white/5",
                   )}
                 >
@@ -117,7 +117,7 @@ export default function TestCta() {
             onClick={handleContinue}
             disabled={!canContinue}
             className={cn(
-              "mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] bg-gradient-to-b from-indigo-400 to-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-[0px_1px_1px_rgba(20,21,38,0.1),0px_6px_14px_-4px_rgba(79,70,229,0.45)] transition-[opacity,transform] duration-150 active:scale-[0.96]",
+              "mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] bg-white px-6 py-3 text-sm font-medium text-indigo-600 shadow-[0px_1px_1px_rgba(20,21,38,0.1),0px_6px_14px_-4px_rgba(0,0,0,0.25)] transition-[opacity,transform] duration-150 active:scale-[0.96]",
               !canContinue && "pointer-events-none opacity-40",
             )}
           >

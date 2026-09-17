@@ -35,7 +35,7 @@ export default function CountryCards() {
   const activeLaws = lawsByCountry(active.slug);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-indigo-300 to-indigo-400">
+    <section className="relative overflow-hidden bg-white">
       <SectionLines lines={LINES} viewBox="0 0 1600 700" />
       <SectionTick />
       <div className="relative z-10 mx-auto max-w-[1560px] px-6 py-16 md:px-14 md:py-24 lg:px-20">
@@ -57,8 +57,10 @@ export default function CountryCards() {
                 type="button"
                 onClick={() => setActiveIndex(index)}
                 className={cn(
-                  "flex items-center gap-2 rounded-full px-5 py-3 text-base font-medium shadow-sm transition-colors duration-150 active:scale-[0.96]",
-                  isActive ? "bg-indigo-600 text-white" : "bg-white/85 text-neutral-700 hover:bg-white",
+                  "flex items-center gap-2 rounded-full border px-5 py-3 text-base font-medium shadow-sm transition-colors duration-150 active:scale-[0.96]",
+                  isActive
+                    ? "border-indigo-600 bg-indigo-600 text-white"
+                    : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300",
                 )}
               >
                 <span aria-hidden className="text-lg leading-none">
@@ -79,7 +81,7 @@ export default function CountryCards() {
               <Reveal key={`${active.slug}-${law.slug}`} delay={i * 0.06}>
                 <Link
                   href={`/radar-regulatorio/${active.slug}/${law.slug}`}
-                  className="group flex h-full flex-col justify-between gap-4 rounded-2xl border border-white/50 bg-white/85 p-6 shadow-sm backdrop-blur-sm transition-shadow duration-300 ease-out hover:shadow-md"
+                  className="group flex h-full flex-col justify-between gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition-shadow duration-300 ease-out hover:shadow-md"
                 >
                   <div>
                     <p className="text-base font-semibold text-neutral-900">{law.nickname ?? law.name}</p>

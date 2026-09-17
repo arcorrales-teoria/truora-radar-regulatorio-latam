@@ -68,7 +68,7 @@ export function CountryTabs({
 
   return (
     <div className="flex w-full max-w-lg flex-col gap-3">
-      <div className="flex w-fit gap-1 rounded-full bg-indigo-950 p-1 shadow-inner">
+      <div className="flex w-fit gap-1 rounded-full bg-indigo-600 p-1 shadow-inner">
         {countries.map((country, index) => (
           <button
             key={country.slug}
@@ -78,14 +78,14 @@ export function CountryTabs({
               goTo(index);
             }}
             className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium transition sm:text-sm ${
-              activeTab === index ? "text-white" : "text-neutral-400 hover:text-neutral-200"
+              activeTab === index ? "text-indigo-600" : "text-white/60 hover:text-white/90"
             }`}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             {activeTab === index && (
               <motion.span
                 layoutId="country-tab-bubble"
-                className="absolute inset-0 z-10 rounded-full bg-indigo-600"
+                className="absolute inset-0 z-10 rounded-full bg-white"
                 transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
               />
             )}
@@ -106,7 +106,7 @@ export function CountryTabs({
                 animate="active"
                 exit="exit"
               >
-                <div className="rounded-3xl bg-indigo-950 p-6">
+                <div className="rounded-3xl bg-indigo-600 p-6">
                   <p className="text-base leading-6 text-white">
                     <span className="font-semibold">{active.name}.</span>{" "}
                     <span className="text-white/60">{active.hook}</span>

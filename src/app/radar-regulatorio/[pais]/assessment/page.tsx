@@ -55,7 +55,7 @@ export default async function AssessmentPage({
   return (
     <>
       <MegaMenu />
-      <main className="relative overflow-hidden bg-gradient-to-b from-indigo-100 to-indigo-200 px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
+      <main className="relative overflow-hidden bg-white px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
         <SectionLines lines={LINES} viewBox="0 0 1600 600" />
         <SectionTick />
         <div className="relative z-10 mx-auto max-w-[1560px]">
