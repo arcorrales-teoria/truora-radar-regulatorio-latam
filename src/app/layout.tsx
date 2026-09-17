@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script
+          id="hs-script-loader"
+          src="https://js.hs-scripts.com/21471312.js"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
