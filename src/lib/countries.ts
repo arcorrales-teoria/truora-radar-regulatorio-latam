@@ -13,6 +13,8 @@ export interface CountryData {
   hook: string;
   /** Imagen editorial 1:1 para la card de "Señales activas por país". */
   image: string;
+  /** Banner "Regulación en movimiento [País]" para la cabecera de la página del país — reemplaza el croquis de mapa cuando existe. Opcional: no todos los países lo tienen todavía. */
+  banner?: string;
 }
 
 export const countries: CountryData[] = [
@@ -27,6 +29,7 @@ export const countries: CountryData[] = [
       "La Ley 2573 de 2026, la que ya venimos llamando “La Ley del Yo No Fui”, cambia quién debe probar una suplantación de identidad.",
     hook: "Si tu empresa da crédito, cobra o reporta a una central de riesgo, tienes que revisar tu proceso de verificación de identidad.",
     image: "/countries/colombia.png",
+    banner: "/banners/colombia.png",
   },
   {
     slug: "chile",
