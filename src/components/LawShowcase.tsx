@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { CircleCheck, RefreshCw, Users, TriangleAlert } from "lucide-react";
 import type { Law } from "@/lib/laws";
@@ -31,11 +32,20 @@ interface Phase {
   id: string;
   step: string;
   icon: (typeof FIELD_META)[keyof typeof FIELD_META]["icon"];
+  lawSlug: string;
   lawName: string;
   text: string;
 }
 
 const PHASE_MS = 4200;
+
+/** Recorte a una frase corta que dé ganas de entrar a ver la ley completa, no el hallazgo entero. */
+function teaser(text: string, maxLength = 90) {
+  if (text.length <= maxLength) return text;
+  const cut = text.slice(0, maxLength);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 40 ? lastSpace : maxLength)}…`;
+}
 
 export function LawShowcase({ country, laws, children }: { country: CountryData; laws: Law[]; children: ReactNode }) {
   const reduced = useReducedMotion();
@@ -50,8 +60,9 @@ export function LawShowcase({ country, laws, children }: { country: CountryData;
             id: `${law.slug}-${field}`,
             step: FIELD_META[field].label,
             icon: FIELD_META[field].icon,
+            lawSlug: law.slug,
             lawName: law.nickname ?? law.name,
-            text,
+            text: teaser(text),
           });
         }
       });
@@ -122,15 +133,23 @@ export function LawShowcase({ country, laws, children }: { country: CountryData;
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -10, filter: "blur(6px)" }}
                 transition={{ duration: 0.6, ease: EASE_OUT }}
-                className="absolute inset-x-6 top-1/2 -translate-y-1/2 rounded-2xl bg-white/95 p-5 shadow-[0px_20px_40px_-16px_rgba(30,27,110,0.5),inset_0px_1px_0px_rgba(255,255,255,0.9)]"
+                className="absolute inset-x-6 top-1/2 -translate-y-1/2"
               >
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-[15px] font-semibold tracking-tight text-neutral-900">{current.lawName}</h3>
-                  <span className="shrink-0 rounded-full bg-indigo-50 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-indigo-600 uppercase">
-                    {country.name}
+                <Link
+                  href={`/radar-regulatorio/${country.slug}/${current.lawSlug}`}
+                  className="group block rounded-2xl bg-white/95 p-5 shadow-[0px_20px_40px_-16px_rgba(30,27,110,0.5),inset_0px_1px_0px_rgba(255,255,255,0.9)] transition-shadow hover:shadow-[0px_24px_48px_-16px_rgba(30,27,110,0.6),inset_0px_1px_0px_rgba(255,255,255,0.9)]"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-[15px] font-semibold tracking-tight text-neutral-900">{current.lawName}</h3>
+                    <span className="shrink-0 rounded-full bg-indigo-50 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-indigo-600 uppercase">
+                      {country.name}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-[13.5px] leading-relaxed text-neutral-600">{current.text}</p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-indigo-600 transition-transform group-hover:translate-x-0.5">
+                    Ver ley →
                   </span>
-                </div>
-                <p className="mt-3 text-[13.5px] leading-relaxed text-neutral-600">{current.text}</p>
+                </Link>
               </motion.div>
             </AnimatePresence>
 

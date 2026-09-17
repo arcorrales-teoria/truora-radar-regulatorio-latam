@@ -61,7 +61,7 @@ export function RadarAlertBar({ className }: { className?: string }) {
           placeholder="tucorreo@tuempresa.com"
           className="min-w-0 flex-1 rounded-xl bg-transparent px-3 py-2.5 text-sm text-neutral-900 placeholder-neutral-400 outline-none"
         />
-        <TextureButton variant="accent" size="default" className="w-auto shrink-0" onClick={handleSubmit}>
+        <TextureButton variant="minimal" size="default" className="w-auto shrink-0" onClick={handleSubmit}>
           Activar radar
           <ArrowRight className="size-4" aria-hidden />
         </TextureButton>

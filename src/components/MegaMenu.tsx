@@ -40,7 +40,7 @@ export default function MegaMenu() {
           })}
         </nav>
 
-        <LinkButton href="/radar-regulatorio#test" variant="accent" size="sm" className="hidden w-auto shrink-0 md:inline-flex">
+        <LinkButton href="/radar-regulatorio#test" variant="minimal" size="sm" className="hidden w-auto shrink-0 md:inline-flex">
           Pon tu proceso bajo la lupa
         </LinkButton>
       </div>

@@ -46,7 +46,7 @@ function HeaderText({ country, hasAssessment }: { country: CountryData; hasAsses
       <p className="text-lg leading-[1.35] font-light text-neutral-600">{country.teaser}</p>
 
       {hasAssessment && (
-        <LinkButton href={`/radar-regulatorio/${country.slug}/assessment`} variant="accent" size="lg" className="mt-6 w-fit">
+        <LinkButton href={`/radar-regulatorio/${country.slug}/assessment`} variant="minimal" size="lg" className="mt-6 w-fit">
           Iniciar diagnóstico
           <ArrowRight className="size-4" aria-hidden />
         </LinkButton>
