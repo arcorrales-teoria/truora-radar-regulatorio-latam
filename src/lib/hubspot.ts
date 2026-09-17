@@ -13,20 +13,16 @@ export const HUBSPOT_REGION = "na1";
 export const HUBSPOT_SCRIPT_SRC = "//js.hsforms.net/forms/embed/v2.js";
 
 /**
- * País -> valor real del dropdown `country` en HubSpot. Confirmado por
- * captura de pantalla del editor de esa propiedad: Colombia, México, Chile,
- * Argentina, El Salvador (visibles) + más detrás de "Show more".
- * "Perú" NO se vio en la captura (quedó cortada antes de llegar a esa
- * opción) — se usa por consistencia con el resto de la lista (nombres
- * completos, con tilde donde corresponde), pero queda SIN CONFIRMAR hasta
- * verificarlo directamente en HubSpot. Si el valor real difiere, el campo
- * simplemente no se pre-llena (no rompe el formulario, la persona solo
- * tiene que elegirlo a mano).
+ * País -> valor real del dropdown `country` en HubSpot. Confirmado 2026-09-17
+ * directo contra la definición real del formulario (`GET
+ * forms.hubspot.com/embed/v3/form/{portalId}/{formId}?callback=...`, el
+ * mismo endpoint que usa el embed para renderizar sus campos): las cuatro
+ * opciones, incluyendo "Perú" con tilde, existen tal cual en el dropdown.
  */
 export const COUNTRY_TO_HUBSPOT: Record<string, string> = {
   colombia: "Colombia",
   chile: "Chile",
-  peru: "Perú", // sin confirmar — ver nota arriba
+  peru: "Perú",
   mexico: "México",
 };
 

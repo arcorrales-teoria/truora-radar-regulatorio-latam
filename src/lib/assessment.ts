@@ -87,17 +87,12 @@ export function subcategoryLabel(value: string | undefined): string | undefined 
 
 /**
  * Cargo del intake, con su equivalencia a `job_title_normalized` de HubSpot
- * — actualizado (2026-09-17) con los valores REALES del dropdown, tomados
- * directamente de una captura de pantalla del editor de esa propiedad en
- * HubSpot (Field Type: Dropdown). Opciones visibles ahí: founder, c_level,
- * vp, director, manager — con un "Show more" que esconde opciones
- * adicionales no vistas.
- *
- * "analista" queda SIN mapear (`hubspotJobTitle: undefined`) a propósito:
- * ninguna de las 5 opciones visibles calza con "colaborador individual/
- * especialista", y no se puede adivinar qué hay detrás de "Show more" sin
- * verlo. Antes de mapearlo, abrir esa propiedad en HubSpot y revisar la
- * lista completa de opciones.
+ * — confirmado 2026-09-17 contra la definición real del formulario (`GET
+ * forms.hubspot.com/embed/v3/form/{portalId}/{formId}?callback=...`, el
+ * mismo endpoint que usa el embed para renderizarse), no solo una captura:
+ * founder, c_level, vp, director, manager, individual_contributor, other.
+ * "analista" mapea a `individual_contributor` ("Colaborador Individual/
+ * Especialista"), la única opción de esa lista que le calza.
  *
  * PENDIENTE (marcado explícitamente por el usuario, no resuelto en este
  * archivo): "a partir del cargo que tenga cambia la estructura de las
@@ -108,7 +103,7 @@ export function subcategoryLabel(value: string | undefined): string | undefined 
  * que rehacer.
  */
 export const ROLE_OPTIONS = [
-  { value: "analista", label: "Analista", hubspotJobTitle: undefined },
+  { value: "analista", label: "Analista", hubspotJobTitle: "individual_contributor" },
   { value: "manager", label: "Manager", hubspotJobTitle: "manager" },
   { value: "head", label: "Head", hubspotJobTitle: "director" },
   { value: "founder", label: "Founder", hubspotJobTitle: "founder" },
