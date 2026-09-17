@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
 import { PageRails } from "@/components/PageRails";
 import { Reveal } from "@/components/Reveal";
-import { CountryMap } from "@/components/CountryMap";
+import { LawShowcase } from "@/components/LawShowcase";
 import { LinkButton } from "@/components/ui/texture-button";
 import { countries, getCountry, type CountryData } from "@/lib/countries";
 import { lawsByCountry } from "@/lib/laws";
@@ -73,41 +72,11 @@ export default async function CountryPage({
       <div className="relative">
         <PageRails />
         <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
-        {country.banner ? (
-          <div className="flex flex-col gap-10">
-            <Reveal>
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl">
-                <Image
-                  src={country.banner}
-                  alt={`Radar regulatorio: ${country.name}`}
-                  fill
-                  sizes="100vw"
-                  priority
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.1} className="max-w-2xl">
-              <HeaderText country={country} hasAssessment={hasAssessment} />
-            </Reveal>
-          </div>
-        ) : (
-          <div className="flex flex-col items-start gap-10 md:flex-row md:items-center md:justify-between md:gap-8">
-            <Reveal className="max-w-2xl">
-              <HeaderText country={country} hasAssessment={hasAssessment} />
-            </Reveal>
-
-            <Reveal delay={0.1} className="w-full shrink-0 md:w-[380px] lg:w-[460px] xl:w-[520px]">
-              <CountryMap
-                code={country.code}
-                lat={country.lat}
-                lng={country.lng}
-                className="h-64 w-full sm:h-80 md:h-[380px] lg:h-[460px] xl:h-[520px]"
-              />
-            </Reveal>
-          </div>
-        )}
+        <Reveal>
+          <LawShowcase country={country} laws={countryLaws}>
+            <HeaderText country={country} hasAssessment={hasAssessment} />
+          </LawShowcase>
+        </Reveal>
 
         {countryLaws.length > 0 ? (
           <div className="mt-16 flex flex-col gap-8">
