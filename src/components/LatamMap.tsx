@@ -105,7 +105,6 @@ export default function LatamMap({ stops, region, mapHeight = 130, activeIndex }
 
   return (
     <div className="relative mx-auto w-full" style={{ aspectRatio: `${vbWidth} / ${vbHeight}` }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(bgSvg)}`}
         className="pointer-events-none h-full w-full select-none"

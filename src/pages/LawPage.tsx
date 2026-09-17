@@ -1,43 +1,20 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Link from "next/link";
+import { useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, RefreshCw, Users, TriangleAlert } from "lucide-react";
+import Link from "@/components/AppLink";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
 import { PageRails } from "@/components/PageRails";
 import { Reveal } from "@/components/Reveal";
 import { LinkButton } from "@/components/ui/texture-button";
 import { getCountry } from "@/lib/countries";
-import { laws, getLaw, daysUntil } from "@/lib/laws";
+import { getLaw, daysUntil } from "@/lib/laws";
 import { getAssessment } from "@/lib/assessment";
 
-export function generateStaticParams() {
-  return laws.map((law) => ({ pais: law.countrySlug, ley: law.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ pais: string; ley: string }>;
-}): Promise<Metadata> {
-  const { pais, ley } = await params;
-  const law = getLaw(pais, ley);
-  if (!law) return {};
-  return {
-    title: law.nickname ? `${law.name}: ${law.nickname}` : law.name,
-    description: law.description,
-  };
-}
-
-export default async function LawPage({
-  params,
-}: {
-  params: Promise<{ pais: string; ley: string }>;
-}) {
-  const { pais, ley } = await params;
+export default function LawPage() {
+  const { pais = "", ley = "" } = useParams();
   const law = getLaw(pais, ley);
   const country = getCountry(pais);
-  if (!law || !country) notFound();
+  if (!law || !country) return null;
 
   const days = law.deadline ? daysUntil(law.deadline) : null;
   const hasAssessment = Boolean(getAssessment(country.slug));

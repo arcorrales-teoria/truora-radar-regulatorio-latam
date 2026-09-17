@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { CircleCheck, RefreshCw, Users, TriangleAlert } from "lucide-react";
 import type { Law } from "@/lib/laws";

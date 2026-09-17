@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import useMeasure from "react-use-measure";
 import { ArrowUpRight } from "lucide-react";

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
+import Link from "@/components/AppLink";
+import Image from "@/components/AppImage";
+import { usePathname } from "@/lib/router";
 import { countries } from "@/lib/countries";
 import { LinkButton } from "@/components/ui/texture-button";
 import { cn } from "@/lib/utils";

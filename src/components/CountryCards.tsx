@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowUpRight } from "lucide-react";
 import { countries } from "@/lib/countries";
 import { laws, lawsByCountry } from "@/lib/laws";

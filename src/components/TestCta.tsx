@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/router";
 import { ArrowRight } from "lucide-react";
 import { SectionLines } from "@/components/SectionLines";
 import { SectionTick } from "@/components/SectionTick";

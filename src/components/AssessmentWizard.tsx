@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import useMeasure from "react-use-measure";
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { AlertTriangle, ArrowLeft, ArrowRight, CheckCircle2, Clock, FolderLock, IdCard, Server, ShieldCheck } from "lucide-react";

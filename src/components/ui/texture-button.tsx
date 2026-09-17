@@ -106,7 +106,7 @@ TextureButton.displayName = "TextureButton";
  * solo fusiona props sobre SU ÚNICO hijo (el div interior), lo que dejaba
  * el <Link> anidado dentro del botón en vez de SER el botón.
  */
-import Link, { type LinkProps } from "next/link";
+import Link, { type AppLinkProps as LinkProps } from "@/components/AppLink";
 
 export function LinkButton({
   href,

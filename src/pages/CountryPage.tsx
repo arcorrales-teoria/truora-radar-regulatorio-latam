@@ -1,34 +1,15 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Link from "next/link";
+import { useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import Link from "@/components/AppLink";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
 import { PageRails } from "@/components/PageRails";
 import { Reveal } from "@/components/Reveal";
 import { LawShowcase } from "@/components/LawShowcase";
 import { LinkButton } from "@/components/ui/texture-button";
-import { countries, getCountry, type CountryData } from "@/lib/countries";
+import { getCountry, type CountryData } from "@/lib/countries";
 import { lawsByCountry } from "@/lib/laws";
 import { getAssessment } from "@/lib/assessment";
-
-export function generateStaticParams() {
-  return countries.map((country) => ({ pais: country.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ pais: string }>;
-}): Promise<Metadata> {
-  const { pais } = await params;
-  const country = getCountry(pais);
-  if (!country) return {};
-  return {
-    title: `${country.name}: regulación de identidad y fraude`,
-    description: country.teaser,
-  };
-}
 
 function HeaderText({ country, hasAssessment }: { country: CountryData; hasAssessment: boolean }) {
   return (
@@ -55,14 +36,10 @@ function HeaderText({ country, hasAssessment }: { country: CountryData; hasAsses
   );
 }
 
-export default async function CountryPage({
-  params,
-}: {
-  params: Promise<{ pais: string }>;
-}) {
-  const { pais } = await params;
+export default function CountryPage() {
+  const { pais = "" } = useParams();
   const country = getCountry(pais);
-  if (!country) notFound();
+  if (!country) return null;
   const countryLaws = lawsByCountry(country.slug);
   const hasAssessment = Boolean(getAssessment(country.slug));
 

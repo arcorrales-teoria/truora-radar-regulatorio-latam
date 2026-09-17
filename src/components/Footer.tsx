@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "@/components/AppImage";
+import Link from "@/components/AppLink";
 import { countries } from "@/lib/countries";
 import { SectionTick } from "@/components/SectionTick";
 import { Reveal } from "@/components/Reveal";
