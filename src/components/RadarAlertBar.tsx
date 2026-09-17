@@ -34,10 +34,10 @@ export function RadarAlertBar({ className }: { className?: string }) {
 
   if (activated) {
     return (
-      <div className={cn("flex items-center gap-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3", className)}>
-        <CheckCircle2 className="size-4 shrink-0 text-emerald-600" aria-hidden />
-        <p className="text-sm text-emerald-800">
-          Radar activado para <span className="font-medium">{email}</span>. Te avisamos apenas cambie la regulación.
+      <div className={cn("flex items-center gap-2.5 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-3", className)}>
+        <CheckCircle2 className="size-4 shrink-0 text-emerald-400" aria-hidden />
+        <p className="text-sm text-emerald-100">
+          Radar activado para <span className="font-medium text-white">{email}</span>. Te avisamos apenas cambie la regulación.
         </p>
       </div>
     );
@@ -45,12 +45,12 @@ export function RadarAlertBar({ className }: { className?: string }) {
 
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
-      <p className="flex items-center gap-2 text-sm font-medium text-neutral-700">
-        <Radar className="size-4 shrink-0 text-indigo-600" aria-hidden />
+      <p className="flex items-center gap-2 text-sm font-medium text-white/80">
+        <Radar className="size-4 shrink-0 text-indigo-300" aria-hidden />
         Activa el radar: te avisamos apenas cambie la regulación de tu sector o tu empresa.
       </p>
 
-      <div className="flex w-full flex-col gap-2 rounded-2xl border border-indigo-200/70 bg-white/70 p-2 backdrop-blur-sm sm:flex-row sm:items-center">
+      <div className="flex w-full flex-col gap-2 rounded-2xl border border-white/15 bg-white/5 p-2 backdrop-blur-sm sm:flex-row sm:items-center">
         <input
           type="email"
           value={email}
@@ -59,7 +59,7 @@ export function RadarAlertBar({ className }: { className?: string }) {
             if (error) setError(null);
           }}
           placeholder="tucorreo@tuempresa.com"
-          className="min-w-0 flex-1 rounded-xl bg-transparent px-3 py-2.5 text-sm text-neutral-900 placeholder-neutral-400 outline-none"
+          className="min-w-0 flex-1 rounded-xl bg-transparent px-3 py-2.5 text-sm text-white placeholder-white/40 outline-none"
         />
         <TextureButton variant="minimal" size="default" className="w-auto shrink-0" onClick={handleSubmit}>
           Activar radar
@@ -68,9 +68,9 @@ export function RadarAlertBar({ className }: { className?: string }) {
       </div>
 
       {error ? (
-        <p className="text-xs text-red-600">{error}</p>
+        <p className="text-xs text-red-300">{error}</p>
       ) : (
-        <p className="text-xs text-neutral-500">Solo correos corporativos — nada de Gmail, Outlook, etc.</p>
+        <p className="text-xs text-white/40">Solo correos corporativos — nada de Gmail, Outlook, etc.</p>
       )}
     </div>
   );

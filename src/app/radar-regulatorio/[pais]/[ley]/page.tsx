@@ -47,29 +47,29 @@ export default async function LawPage({
       <MegaMenu />
       <div className="relative">
         <PageRails />
-        <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
+        <main className="mx-auto max-w-[1560px] bg-[#01022e] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
         <Reveal>
           <Link
             href={`/radar-regulatorio/${country.slug}`}
-            className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-indigo-600"
+            className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-white/50 hover:text-white"
           >
             <ArrowLeft className="size-4" aria-hidden />
             Volver a {country.name}
           </Link>
 
-          <span className="mb-4 block text-xs font-semibold tracking-[0.08em] text-indigo-600 uppercase">
+          <span className="mb-4 block text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">
             {country.name}
           </span>
-          <h1 className="mb-3 text-4xl font-medium text-neutral-900 md:text-5xl">{law.name}</h1>
-          {law.nickname && <p className="mb-4 text-xl font-light text-neutral-500">{law.nickname}</p>}
-          <p className="max-w-2xl text-lg leading-[1.35] font-light text-neutral-600">{law.description}</p>
+          <h1 className="mb-3 text-4xl font-medium text-white md:text-5xl">{law.name}</h1>
+          {law.nickname && <p className="mb-4 text-xl font-light text-white/60">{law.nickname}</p>}
+          <p className="max-w-2xl text-lg leading-[1.35] font-light text-white/70">{law.description}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <span className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700">
-              Estado: <span className="text-neutral-500">{law.status}</span>
+            <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/80">
+              Estado: <span className="text-white/50">{law.status}</span>
             </span>
             {days !== null && days > 0 && (
-              <span className="rounded-full bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600">
+              <span className="rounded-full bg-indigo-500/15 px-4 py-2 text-sm font-medium text-indigo-300">
                 Faltan {days} días{law.deadlineLabel ? ` para: ${law.deadlineLabel}` : ""}
               </span>
             )}
@@ -79,33 +79,33 @@ export default async function LawPage({
         {(law.whatChanged || law.whoItAffects || law.impact) && (
           <Reveal delay={0.1}>
             <div className="mt-14">
-              <h2 className="mb-6 text-2xl font-medium text-neutral-900">Qué necesitas saber</h2>
+              <h2 className="mb-6 text-2xl font-medium text-white">Qué necesitas saber</h2>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {law.whatChanged && (
-                  <div className="rounded-2xl border border-neutral-200 bg-white p-6">
-                    <div className="mb-3 flex items-center gap-2 text-indigo-600">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <div className="mb-3 flex items-center gap-2 text-indigo-300">
                       <RefreshCw className="size-4" aria-hidden />
                       <span className="text-xs font-semibold tracking-[0.06em] uppercase">Qué cambió</span>
                     </div>
-                    <p className="text-sm leading-relaxed font-light text-neutral-600">{law.whatChanged}</p>
+                    <p className="text-sm leading-relaxed font-light text-white/60">{law.whatChanged}</p>
                   </div>
                 )}
                 {law.whoItAffects && (
-                  <div className="rounded-2xl border border-neutral-200 bg-white p-6">
-                    <div className="mb-3 flex items-center gap-2 text-indigo-600">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <div className="mb-3 flex items-center gap-2 text-indigo-300">
                       <Users className="size-4" aria-hidden />
                       <span className="text-xs font-semibold tracking-[0.06em] uppercase">A quién afecta</span>
                     </div>
-                    <p className="text-sm leading-relaxed font-light text-neutral-600">{law.whoItAffects}</p>
+                    <p className="text-sm leading-relaxed font-light text-white/60">{law.whoItAffects}</p>
                   </div>
                 )}
                 {law.impact && (
-                  <div className="rounded-2xl border border-neutral-200 bg-white p-6">
-                    <div className="mb-3 flex items-center gap-2 text-indigo-600">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <div className="mb-3 flex items-center gap-2 text-indigo-300">
                       <TriangleAlert className="size-4" aria-hidden />
                       <span className="text-xs font-semibold tracking-[0.06em] uppercase">Qué impacto tiene</span>
                     </div>
-                    <p className="text-sm leading-relaxed font-light text-neutral-600">{law.impact}</p>
+                    <p className="text-sm leading-relaxed font-light text-white/60">{law.impact}</p>
                   </div>
                 )}
               </div>
@@ -114,9 +114,9 @@ export default async function LawPage({
         )}
 
         <Reveal delay={0.2}>
-          <div id="implementar" className="mt-10 scroll-mt-24 rounded-2xl border border-neutral-200 bg-neutral-50 p-8">
-            <p className="text-lg font-medium text-neutral-900">¿Tienes dudas sobre cómo cumplir esta ley?</p>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed font-light text-neutral-600">
+          <div id="implementar" className="mt-10 scroll-mt-24 rounded-2xl border border-white/10 bg-white/5 p-8">
+            <p className="text-lg font-medium text-white">¿Tienes dudas sobre cómo cumplir esta ley?</p>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed font-light text-white/60">
               Pon tu proceso bajo este test para saber en qué puntos o procesos tienes que mejorar.
             </p>
             <LinkButton

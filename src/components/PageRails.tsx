@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  */
 
 function Rail({ className }: { className: string }) {
-  return <div aria-hidden className={cn("pointer-events-none absolute inset-y-0 z-20 w-px bg-indigo-700/65", className)} />;
+  return <div aria-hidden className={cn("pointer-events-none absolute inset-y-0 z-20 w-px bg-indigo-400/50", className)} />;
 }
 
 export function PageRails() {

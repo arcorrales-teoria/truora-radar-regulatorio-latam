@@ -22,14 +22,14 @@ export function UpcomingLawsRow() {
   if (laws.length === 0) return null;
 
   return (
-    <section id="vencimientos" className="relative overflow-hidden bg-white">
+    <section id="vencimientos" className="relative overflow-hidden bg-[#01022e]">
       <SectionLines lines={LINES} viewBox="0 0 1600 500" />
       <SectionTick />
       <div className="relative z-10 mx-auto max-w-[1560px] px-6 py-16 md:px-14 md:py-24 lg:px-20">
         <Reveal className="mb-10 flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-3">
-            <span className="text-xs font-semibold tracking-[0.08em] text-indigo-900 uppercase">Cronología</span>
-            <h2 className="text-3xl font-medium text-neutral-900 md:text-4xl">Próximos vencimientos</h2>
+            <span className="text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">Cronología</span>
+            <h2 className="text-3xl font-medium text-white md:text-4xl">Próximos vencimientos</h2>
           </div>
           <LinkButton href="/radar-regulatorio#test" variant="minimal" size="lg" className="w-fit shrink-0">
             Ver si mi empresa está lista

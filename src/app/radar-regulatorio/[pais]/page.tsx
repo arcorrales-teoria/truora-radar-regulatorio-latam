@@ -35,15 +35,15 @@ function HeaderText({ country, hasAssessment }: { country: CountryData; hasAsses
     <>
       <Link
         href="/radar-regulatorio"
-        className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-indigo-600"
+        className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-white/50 hover:text-white"
       >
         <ArrowLeft className="size-4" aria-hidden />
         Volver al radar
       </Link>
 
-      <span className="mb-4 block text-xs font-semibold tracking-[0.08em] text-indigo-600 uppercase">Radar regulatorio</span>
-      <h1 className="mb-4 text-4xl font-medium text-neutral-900 md:text-5xl">{country.name}</h1>
-      <p className="text-lg leading-[1.35] font-light text-neutral-600">{country.teaser}</p>
+      <span className="mb-4 block text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">Radar regulatorio</span>
+      <h1 className="mb-4 text-4xl font-medium text-white md:text-5xl">{country.name}</h1>
+      <p className="text-lg leading-[1.35] font-light text-white/70">{country.teaser}</p>
 
       {hasAssessment && (
         <LinkButton href={`/radar-regulatorio/${country.slug}/assessment`} variant="minimal" size="lg" className="mt-6 w-fit">
@@ -71,7 +71,7 @@ export default async function CountryPage({
       <MegaMenu />
       <div className="relative">
         <PageRails />
-        <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
+        <main className="mx-auto max-w-[1560px] bg-[#01022e] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
         <Reveal>
           <LawShowcase country={country} laws={countryLaws}>
             <HeaderText country={country} hasAssessment={hasAssessment} />
@@ -82,15 +82,15 @@ export default async function CountryPage({
           <div className="mt-16 flex flex-col gap-8">
             {countryLaws.map((law, i) => (
               <Reveal key={law.slug} delay={i * 0.08}>
-                <div className="rounded-2xl border border-neutral-200 bg-white p-6 md:p-8">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div>
-                      <p className="text-lg font-semibold text-neutral-900">{law.nickname ?? law.name}</p>
-                      <p className="mt-2 max-w-2xl text-sm leading-[1.4] font-light text-neutral-600">{law.description}</p>
+                      <p className="text-lg font-semibold text-white">{law.nickname ?? law.name}</p>
+                      <p className="mt-2 max-w-2xl text-sm leading-[1.4] font-light text-white/60">{law.description}</p>
                     </div>
                     <Link
                       href={`/radar-regulatorio/${country.slug}/${law.slug}`}
-                      className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-indigo-600"
+                      className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-indigo-300"
                     >
                       Ver detalle
                       <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
@@ -98,29 +98,29 @@ export default async function CountryPage({
                   </div>
 
                   {(law.whatChanged || law.whoItAffects || law.impact) && (
-                    <div className="mt-6 grid grid-cols-1 gap-4 border-t border-neutral-100 pt-6 md:grid-cols-3">
+                    <div className="mt-6 grid grid-cols-1 gap-4 border-t border-white/10 pt-6 md:grid-cols-3">
                       {law.whatChanged && (
-                        <div className="rounded-xl bg-neutral-50 p-4">
-                          <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-600 uppercase">
+                        <div className="rounded-xl bg-white/5 p-4">
+                          <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-300 uppercase">
                             Qué cambió
                           </span>
-                          <p className="mt-1.5 text-sm leading-[1.4] font-light text-neutral-600">{law.whatChanged}</p>
+                          <p className="mt-1.5 text-sm leading-[1.4] font-light text-white/60">{law.whatChanged}</p>
                         </div>
                       )}
                       {law.whoItAffects && (
-                        <div className="rounded-xl bg-neutral-50 p-4">
-                          <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-600 uppercase">
+                        <div className="rounded-xl bg-white/5 p-4">
+                          <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-300 uppercase">
                             A quién afecta
                           </span>
-                          <p className="mt-1.5 text-sm leading-[1.4] font-light text-neutral-600">{law.whoItAffects}</p>
+                          <p className="mt-1.5 text-sm leading-[1.4] font-light text-white/60">{law.whoItAffects}</p>
                         </div>
                       )}
                       {law.impact && (
-                        <div className="rounded-xl bg-neutral-50 p-4">
-                          <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-600 uppercase">
+                        <div className="rounded-xl bg-white/5 p-4">
+                          <span className="block text-[11px] font-semibold tracking-[0.06em] text-indigo-300 uppercase">
                             Impacto en el corto plazo
                           </span>
-                          <p className="mt-1.5 text-sm leading-[1.4] font-light text-neutral-600">{law.impact}</p>
+                          <p className="mt-1.5 text-sm leading-[1.4] font-light text-white/60">{law.impact}</p>
                         </div>
                       )}
                     </div>
@@ -131,7 +131,7 @@ export default async function CountryPage({
           </div>
         ) : (
           <Reveal delay={0.1}>
-            <div className="mt-16 rounded-2xl border border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
+            <div className="mt-16 rounded-2xl border border-white/15 bg-white/5 p-8 text-sm font-light text-white/60">
               Estamos terminando de investigar y cruzar esta regulación con la información de Truora. Vuelve pronto:
               esta página ya está indexada, el contenido se completa aquí mismo.
             </div>

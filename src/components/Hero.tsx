@@ -25,18 +25,18 @@ export default function Hero() {
   const [activeCountry, setActiveCountry] = useState(0);
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-[#01022e]">
     <SectionTick />
     <div className="relative z-10 mx-auto flex max-w-[1560px] flex-col justify-center px-6 pt-24 pb-10 md:min-h-[86dvh] md:px-14 md:pt-28 md:pb-14 lg:px-20">
       <div className="flex flex-col items-start gap-10 md:flex-row md:gap-8">
         <div className="flex shrink-0 flex-col items-start gap-6 md:w-[380px] md:pt-4 lg:w-[420px]">
-          <span className="rounded-full bg-indigo-50 px-4 py-1.5 text-xs font-semibold tracking-[0.08em] text-indigo-600 uppercase">
+          <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-[0.08em] text-indigo-200 uppercase">
             Radar regulatorio LATAM
           </span>
-          <h1 className="text-5xl leading-[1.02] font-medium text-neutral-900 md:text-6xl lg:text-[76px] lg:leading-[1.0]">
+          <h1 className="text-5xl leading-[1.02] font-medium text-white md:text-6xl lg:text-[76px] lg:leading-[1.0]">
             Radar de regulación
           </h1>
-          <p className="max-w-xl text-xl leading-[1.35] font-light text-neutral-600 md:text-2xl">
+          <p className="max-w-xl text-xl leading-[1.35] font-light text-white/70 md:text-2xl">
             <TextWordReveal
               prefix="La página donde puedes entender todos los cambios regulatorios de LATAM y cómo afectan a tu"
               words={["industria.", "operación.", "cumplimiento.", "negocio."]}

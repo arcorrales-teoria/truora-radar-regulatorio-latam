@@ -39,7 +39,7 @@ export default function TestCta() {
   };
 
   return (
-    <section id="test" className="relative overflow-hidden bg-white">
+    <section id="test" className="relative overflow-hidden bg-[#01022e]">
       <SectionLines lines={LINES} viewBox="0 0 1600 520" />
       <SectionTick />
       <div className="relative z-10 mx-auto max-w-[1560px] px-6 py-16 md:px-14 md:py-24 lg:px-20">

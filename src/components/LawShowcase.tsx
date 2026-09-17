@@ -97,13 +97,13 @@ export function LawShowcase({ country, laws, children }: { country: CountryData;
                   key={label}
                   className={cn(
                     "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-all duration-300",
-                    isActive ? "bg-indigo-50 font-medium text-indigo-700" : isDone ? "text-neutral-700" : "text-neutral-500",
+                    isActive ? "bg-white/10 font-medium text-white" : isDone ? "text-white/70" : "text-white/40",
                   )}
                 >
                   <span
                     className={cn(
                       "flex size-6 shrink-0 items-center justify-center rounded-full transition-colors duration-300",
-                      isActive ? "bg-indigo-600 text-white" : isDone ? "bg-emerald-100 text-emerald-700" : "bg-neutral-100 text-neutral-500",
+                      isActive ? "bg-indigo-600 text-white" : isDone ? "bg-emerald-400/20 text-emerald-300" : "bg-white/10 text-white/50",
                     )}
                   >
                     {isDone ? <CircleCheck className="size-3.5" aria-hidden /> : <span className="font-mono text-[11px]">{index + 1}</span>}
@@ -118,7 +118,7 @@ export function LawShowcase({ country, laws, children }: { country: CountryData;
 
       {current && Icon && (
         <figure className="relative mx-auto w-full max-w-[440px] lg:mr-[-24px] lg:max-w-none xl:mr-[-40px]">
-          <div className="relative aspect-[564/404] overflow-hidden rounded-2xl border border-neutral-200/80 shadow-[0px_1px_1px_rgba(20,21,38,0.06),0px_16px_32px_-12px_rgba(38,36,110,0.3),inset_0px_1px_0px_rgba(255,255,255,0.5)]">
+          <div className="relative aspect-[564/404] overflow-hidden rounded-2xl border border-white/10 shadow-[0px_1px_1px_rgba(0,0,0,0.2),0px_16px_32px_-12px_rgba(0,0,0,0.5),inset_0px_1px_0px_rgba(255,255,255,0.15)]">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-100 via-indigo-400 to-indigo-700" />
             <div
               className="absolute inset-0 opacity-40 mix-blend-soft-light"
@@ -169,7 +169,7 @@ export function LawShowcase({ country, laws, children }: { country: CountryData;
               </motion.div>
             </AnimatePresence>
           </div>
-          <figcaption className="mt-2.5 text-center font-mono text-[11px] text-neutral-500">Radar regulatorio · {country.name}</figcaption>
+          <figcaption className="mt-2.5 text-center font-mono text-[11px] text-white/40">Radar regulatorio · {country.name}</figcaption>
         </figure>
       )}
     </div>

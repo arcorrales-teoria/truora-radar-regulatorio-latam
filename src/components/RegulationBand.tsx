@@ -19,7 +19,7 @@ function MessageGroup({ hidden }: { hidden?: boolean }) {
     <div className="flex shrink-0 items-center gap-10 pr-10" aria-hidden={hidden}>
       {REPEATS.map((_, i) => (
         <span key={i} className="flex shrink-0 items-center gap-10">
-          <span className="text-2xl font-semibold tracking-[0.04em] text-indigo-900 uppercase">{MESSAGE}</span>
+          <span className="text-2xl font-semibold tracking-[0.04em] text-white uppercase">{MESSAGE}</span>
           <span className="text-indigo-400" aria-hidden>
             •
           </span>
@@ -34,9 +34,9 @@ export function RegulationBand() {
 
   if (reduced) {
     return (
-      <div className="relative bg-white">
+      <div className="relative bg-[#01022e]">
         <SectionTick />
-        <p className={`${RAIL_INSET} px-6 py-12 text-center text-2xl font-semibold tracking-[0.04em] text-indigo-900 uppercase`}>
+        <p className={`${RAIL_INSET} px-6 py-12 text-center text-2xl font-semibold tracking-[0.04em] text-white uppercase`}>
           {MESSAGE}
         </p>
       </div>
@@ -44,7 +44,7 @@ export function RegulationBand() {
   }
 
   return (
-    <div className="relative overflow-hidden bg-white py-12">
+    <div className="relative overflow-hidden bg-[#01022e] py-12">
       <SectionTick />
       <div className={`${RAIL_INSET} overflow-hidden`}>
         <div className="flex w-max animate-[marquee_38s_linear_infinite] pl-6">
