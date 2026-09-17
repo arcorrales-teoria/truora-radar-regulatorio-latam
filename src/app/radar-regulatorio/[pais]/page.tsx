@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
+import { PageRails } from "@/components/PageRails";
 import { Reveal } from "@/components/Reveal";
 import { CountryMap } from "@/components/CountryMap";
 import { LinkButton } from "@/components/ui/texture-button";
@@ -69,7 +70,9 @@ export default async function CountryPage({
   return (
     <>
       <MegaMenu />
-      <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
+      <div className="relative">
+        <PageRails />
+        <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
         {country.banner ? (
           <div className="flex flex-col gap-10">
             <Reveal>
@@ -165,8 +168,9 @@ export default async function CountryPage({
             </div>
           </Reveal>
         )}
-      </main>
-      <Footer />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }

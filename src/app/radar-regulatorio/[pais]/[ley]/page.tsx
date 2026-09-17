@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, RefreshCw, Users, TriangleAlert } from "lucide-react";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
+import { PageRails } from "@/components/PageRails";
 import { Reveal } from "@/components/Reveal";
 import { LinkButton } from "@/components/ui/texture-button";
 import { getCountry } from "@/lib/countries";
@@ -44,7 +45,9 @@ export default async function LawPage({
   return (
     <>
       <MegaMenu />
-      <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
+      <div className="relative">
+        <PageRails />
+        <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
         <Reveal>
           <Link
             href={`/radar-regulatorio/${country.slug}`}
@@ -127,8 +130,9 @@ export default async function LawPage({
             </LinkButton>
           </div>
         </Reveal>
-      </main>
-      <Footer />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
