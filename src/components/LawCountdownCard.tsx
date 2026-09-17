@@ -81,9 +81,9 @@ export function LawCountdownCard({ law }: { law: Law & { daysLeft: number } }) {
         <TextureCardHeader className="flex flex-col gap-3 px-7 pt-7 pb-4">
           <div className="flex items-center justify-between gap-2">
             <TextureCardTitle className="text-lg">{country?.name}</TextureCardTitle>
-            {law.deadlineLabel && (
-              <span className="shrink-0 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-medium text-white/70">
-                {law.deadlineLabel}
+            {law.deadline && (
+              <span className="shrink-0 rounded-full bg-amber-400/15 px-2.5 py-1 text-[10px] font-semibold tracking-[0.04em] text-amber-300 uppercase">
+                Inminente
               </span>
             )}
           </div>
@@ -104,7 +104,8 @@ export function LawCountdownCard({ law }: { law: Law & { daysLeft: number } }) {
 
         <TextureCardContent className="px-7 py-5">
           <p className="text-sm leading-relaxed text-white/85">
-            <span className="font-medium text-white">{law.nickname ?? law.name}.</span> {law.description}
+            <span className="font-medium text-white">{law.nickname ?? law.name}.</span>{" "}
+            {law.urgentPitch ?? law.description}
           </p>
         </TextureCardContent>
 

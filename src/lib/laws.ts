@@ -14,6 +14,8 @@ export interface Law {
   whoItAffects?: string;
   /** Consecuencia concreta de no cumplir / qué está en juego. */
   impact?: string;
+  /** Copy directo al problema (formato "si haces/no haces X, no cumples. Descubre cómo Y"), usado en la card de cuenta regresiva de la home — ahí no hay espacio para explicar la ley, solo para golpear el dolor. */
+  urgentPitch?: string;
 }
 
 export const laws: Law[] = [
@@ -33,6 +35,8 @@ export const laws: Law[] = [
       "Entidades financieras y crediticias (bancos, cooperativas, fondos de empleados, fintechs de crédito, aseguradoras), operadores de telecomunicaciones (Claro, Movistar, Tigo, WOM, MVNO) y cualquier comercio que dé crédito, cobre o reporte a una central de riesgo.",
     impact:
       "Si la entidad no puede demostrar una verificación de identidad suficiente y razonable, pierde el derecho de cobro, debe devolver el dinero y corregir el reporte en la central de riesgo, con plazos cortos de 10 a 20 días hábiles.",
+    urgentPitch:
+      "Si no puedes probar cómo verificaste la identidad de un cliente, ya no cumples. Descubre cómo blindar tu proceso.",
   },
   {
     slug: "ncg-538",
@@ -50,6 +54,7 @@ export const laws: Law[] = [
       "Bancos, emisores de tarjetas de pago, cooperativas de ahorro y crédito, sociedades de apoyo al giro y fintechs supervisadas por la CMF.",
     impact:
       "Si el emisor no implementó la autenticación reforzada y ocurre un fraude, es el emisor quien responde por el daño al usuario: la responsabilidad se mueve del cliente hacia la entidad.",
+    urgentPitch: "Si tus clientes siguen entrando y transfiriendo con una sola clave, tu banco ya no cumple. Descubre cómo pasar a doble factor.",
   },
   {
     slug: "ley-21719",
@@ -65,6 +70,7 @@ export const laws: Law[] = [
       "Bancos, cajas de compensación, corredoras y fintechs ya regulados por la CMF, y cualquier entidad que use biometría para verificar identidad o que segmente personas según su capacidad de pago.",
     impact:
       "No basta con cumplir la autenticación reforzada de la NCG 538: hay que poder demostrar consentimiento explícito sobre los datos biométricos, ante una nueva Agencia de Protección de Datos Personales con multas de hasta 20.000 UTM.",
+    urgentPitch: "Si usas biometría sin consentimiento explícito y separado, no cumples. Descubre cómo cerrar esa brecha.",
   },
   {
     slug: "id-peru",
@@ -92,6 +98,8 @@ export const laws: Law[] = [
     whoItAffects: "Bancos, financieras y emisores de tarjetas de crédito o débito supervisados por la SBS.",
     impact:
       "Si el banco no exigió el segundo factor y el cliente reporta una operación que no reconoce, es el banco quien responde por la pérdida, salvo que pruebe la responsabilidad del usuario.",
+    urgentPitch:
+      "Si no exiges un segundo factor en cada operación con tarjeta, tu banco responde por el fraude. Descubre cómo evitarlo.",
   },
   {
     slug: "sbs-01747-2026",
@@ -108,6 +116,7 @@ export const laws: Law[] = [
       "Bancos y entidades del sistema financiero, de seguros y AFP que actúan como proveedores de servicios BaaS, y las fintechs o apps que operan como receptores bajo su licencia.",
     impact:
       "La responsabilidad frente al cliente y ante la SBS, incluida la debida diligencia del cliente y la prevención de lavado de activos, siempre queda en la entidad supervisada, aunque la cara visible del servicio sea la fintech.",
+    urgentPitch: "Si eres el banco detrás de una fintech sin el contrato claro, no cumples. Descubre cómo prepararte.",
   },
   {
     slug: "ley-fintech",
