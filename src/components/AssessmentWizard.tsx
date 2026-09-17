@@ -45,17 +45,36 @@ const MODULE_ICONS: Record<ModuleIcon, typeof ShieldCheck> = {
   server: Server,
 };
 
+/**
+ * Misma construcción de "textura" que TextureButton (capa exterior con
+ * borde + sombra, capa interior con degradado + resalte inset) para que
+ * los pills del wizard no se sientan planos al lado del botón — pedido
+ * explícito de coherencia visual. El activo usa blanco sólido (no otro
+ * indigo): la card ya es bg-indigo-600, así que un pill activo también
+ * indigo-600 se volvía invisible contra su propio fondo.
+ */
 function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full border px-4 py-2 text-sm font-medium transition-[color,background-color,border-color,transform] duration-150 active:scale-[0.96]",
-        active ? "border-indigo-400 bg-indigo-600 text-white" : "border-white/15 text-white/70 hover:border-white/30 hover:bg-white/5",
+        "rounded-full border p-[1px] transition-[background-color,border-color,box-shadow,transform] duration-150 active:scale-[0.96]",
+        active
+          ? "border-black/10 bg-white shadow-[0px_1px_1px_rgba(20,21,38,0.1),0px_4px_10px_-4px_rgba(0,0,0,0.35)]"
+          : "border-white/15 bg-white/5 hover:border-white/30 hover:bg-white/10",
       )}
     >
-      {children}
+      <span
+        className={cn(
+          "flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150",
+          active
+            ? "bg-gradient-to-b from-white to-neutral-50 text-indigo-600 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.9)]"
+            : "text-white/70",
+        )}
+      >
+        {children}
+      </span>
     </button>
   );
 }
@@ -303,8 +322,10 @@ export function AssessmentWizard({
               <AnimatePresence custom={direction} mode="popLayout" initial={false}>
                 {phase === "intro" && (
                   <motion.div key="intro" custom={direction} variants={variants} initial="initial" animate="active" exit="exit">
-                    <span className="inline-flex w-fit items-center gap-2 rounded-full bg-indigo-500/15 px-3 py-1 text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">
-                      {assessment.lawLabel}
+                    <span className="inline-flex w-fit rounded-full border border-white/15 bg-white/5 p-[1px] shadow-[0px_1px_1px_rgba(0,0,0,0.12)]">
+                      <span className="rounded-full bg-gradient-to-b from-white/15 to-white/5 px-3 py-1 text-xs font-semibold tracking-[0.08em] text-indigo-100 uppercase shadow-[inset_0px_1px_0px_rgba(255,255,255,0.25)]">
+                        {assessment.lawLabel}
+                      </span>
                     </span>
                     <h2 className="mt-4 text-2xl leading-snug font-medium text-white md:text-3xl">
                       ¿Listo para saber qué tan preparada está tu empresa frente a {assessment.lawLabel} {assessment.flag}?
@@ -312,9 +333,16 @@ export function AssessmentWizard({
                     <p className="mt-3 text-sm leading-relaxed text-white/60">{assessment.intro}</p>
 
                     <div className="mt-6 flex flex-wrap gap-2">
-                      <span className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/70">~3 minutos</span>
-                      <span className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/70">10 preguntas</span>
-                      <span className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/70">Resultado inmediato</span>
+                      {["~3 minutos", "10 preguntas", "Resultado inmediato"].map((label) => (
+                        <span
+                          key={label}
+                          className="rounded-full border border-white/15 bg-white/5 p-[1px] shadow-[0px_1px_1px_rgba(0,0,0,0.12)]"
+                        >
+                          <span className="block rounded-full bg-gradient-to-b from-white/15 to-white/5 px-3 py-1 text-xs font-medium text-white/85 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.25)]">
+                            {label}
+                          </span>
+                        </span>
+                      ))}
                     </div>
 
                     <TextureButton variant="accent" size="lg" className="mt-8 w-fit" onClick={() => goTo("intake", 1)}>

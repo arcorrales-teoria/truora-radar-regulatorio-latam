@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { countries } from "@/lib/countries";
-import { lawsByCountry } from "@/lib/laws";
+import { laws, lawsByCountry } from "@/lib/laws";
 import { Reveal } from "@/components/Reveal";
 import { SectionLines } from "@/components/SectionLines";
 import { SectionTick } from "@/components/SectionTick";
@@ -28,11 +28,16 @@ const FLAG: Record<string, string> = {
  * y, debajo, una grilla de cards de TEXTO (sin imagen) con las leyes de ese
  * país — pedido explícito del usuario, inspirado en una referencia con
  * pills de país + grid de cards de fuentes de datos.
+ *
+ * `activeIndex === -1` es el pill "LATAM": muestra las leyes de TODOS los
+ * países a la vez (pedido explícito), cada card con su propia bandera para
+ * distinguir el país de origen ya que ahora están mezcladas.
  */
 export default function CountryCards() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const active = countries[activeIndex];
-  const activeLaws = lawsByCountry(active.slug);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const isLatam = activeIndex === -1;
+  const active = isLatam ? null : countries[activeIndex];
+  const activeLaws = isLatam ? laws : lawsByCountry(active!.slug);
 
   return (
     <section className="relative overflow-hidden bg-white">
@@ -49,6 +54,23 @@ export default function CountryCards() {
         </Reveal>
 
         <Reveal delay={0.05} className="mb-8 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => setActiveIndex(-1)}
+            className={cn(
+              "flex items-center gap-2 rounded-full border px-5 py-3 text-base font-medium shadow-sm transition-colors duration-150 active:scale-[0.96]",
+              isLatam
+                ? "border-indigo-600 bg-indigo-600 text-white"
+                : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300",
+            )}
+          >
+            <span aria-hidden className="text-lg leading-none">
+              🌎
+            </span>
+            LATAM
+            <span className={cn("text-sm", isLatam ? "text-white/70" : "text-neutral-400")}>{laws.length}</span>
+          </button>
+
           {countries.map((country, index) => {
             const isActive = activeIndex === index;
             return (
@@ -78,12 +100,18 @@ export default function CountryCards() {
         {activeLaws.length > 0 ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {activeLaws.map((law, i) => (
-              <Reveal key={`${active.slug}-${law.slug}`} delay={i * 0.06}>
+              <Reveal key={`${law.countrySlug}-${law.slug}`} delay={i * 0.06}>
                 <Link
-                  href={`/radar-regulatorio/${active.slug}/${law.slug}`}
+                  href={`/radar-regulatorio/${law.countrySlug}/${law.slug}`}
                   className="group flex h-full flex-col justify-between gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition-shadow duration-300 ease-out hover:shadow-md"
                 >
                   <div>
+                    {isLatam && (
+                      <span className="mb-2 inline-flex items-center gap-1.5 text-xs font-medium text-neutral-500">
+                        <span aria-hidden>{FLAG[law.countrySlug]}</span>
+                        {countries.find((c) => c.slug === law.countrySlug)?.name}
+                      </span>
+                    )}
                     <p className="text-base font-semibold text-neutral-900">{law.nickname ?? law.name}</p>
                     <p className="mt-2 line-clamp-3 text-sm leading-snug text-neutral-600">{law.description}</p>
                   </div>
@@ -99,15 +127,17 @@ export default function CountryCards() {
           <p className="text-sm text-neutral-600">Estamos terminando de investigar esta regulación. Vuelve pronto.</p>
         )}
 
-        <Reveal delay={0.1} className="mt-8 flex justify-end">
-          <Link
-            href={`/radar-regulatorio/${active.slug}`}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-800 hover:text-indigo-950"
-          >
-            Ver todo {active.name}
-            <ArrowUpRight className="size-4" aria-hidden />
-          </Link>
-        </Reveal>
+        {active && (
+          <Reveal delay={0.1} className="mt-8 flex justify-end">
+            <Link
+              href={`/radar-regulatorio/${active.slug}`}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-800 hover:text-indigo-950"
+            >
+              Ver todo {active.name}
+              <ArrowUpRight className="size-4" aria-hidden />
+            </Link>
+          </Reveal>
+        )}
       </div>
     </section>
   );

@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw, Users, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ArrowRight, RefreshCw, Users, TriangleAlert } from "lucide-react";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { LinkButton } from "@/components/ui/texture-button";
 import { getCountry } from "@/lib/countries";
 import { laws, getLaw, daysUntil } from "@/lib/laws";
+import { getAssessment } from "@/lib/assessment";
 
 export function generateStaticParams() {
   return laws.map((law) => ({ pais: law.countrySlug, ley: law.slug }));
@@ -37,6 +39,7 @@ export default async function LawPage({
   if (!law || !country) notFound();
 
   const days = law.deadline ? daysUntil(law.deadline) : null;
+  const hasAssessment = Boolean(getAssessment(country.slug));
 
   return (
     <>
@@ -108,9 +111,20 @@ export default async function LawPage({
         )}
 
         <Reveal delay={0.2}>
-          <div id="implementar" className="mt-10 scroll-mt-24 rounded-2xl border border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
-            Estamos completando la guía de implementación paso a paso para esta regulación. Mientras tanto, agenda un
-            diagnóstico con Truora para revisar cómo te afecta puntualmente.
+          <div id="implementar" className="mt-10 scroll-mt-24 rounded-2xl border border-neutral-200 bg-neutral-50 p-8">
+            <p className="text-lg font-medium text-neutral-900">¿Tienes dudas sobre cómo cumplir esta ley?</p>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed font-light text-neutral-600">
+              Pon tu proceso bajo este test para saber en qué puntos o procesos tienes que mejorar.
+            </p>
+            <LinkButton
+              href={hasAssessment ? `/radar-regulatorio/${country.slug}/assessment` : "/radar-regulatorio#test"}
+              variant="accent"
+              size="lg"
+              className="mt-5 w-fit"
+            >
+              Hacer el test
+              <ArrowRight className="size-4" aria-hidden />
+            </LinkButton>
           </div>
         </Reveal>
       </main>
