@@ -61,9 +61,9 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full border p-[1px] transition-[background-color,border-color,box-shadow,transform] duration-150 active:scale-[0.96]",
+        "min-h-10 rounded-full border p-[1px] transition-[background-color,border-color,box-shadow,transform] duration-150 active:scale-[0.96]",
         active
-          ? "border-black/10 bg-white shadow-[0px_1px_1px_rgba(20,21,38,0.1),0px_4px_10px_-4px_rgba(0,0,0,0.35)]"
+          ? "border-black/10 bg-white text-[#01022e] shadow-[0px_1px_1px_rgba(20,21,38,0.1),0px_4px_10px_-4px_rgba(0,0,0,0.35)]"
           : "border-white/15 bg-white/5 hover:border-white/30 hover:bg-white/10",
       )}
     >
@@ -71,7 +71,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
         className={cn(
           "flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150",
           active
-            ? "bg-gradient-to-b from-white to-neutral-50 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.9)]"
+            ? "bg-gradient-to-b from-white to-neutral-50 text-[#01022e] shadow-[inset_0px_1px_0px_rgba(255,255,255,0.9)]"
             : "text-white/70",
         )}
       >
@@ -331,7 +331,7 @@ export function AssessmentWizard({
 
   return (
     <TextureCardStyled className="mx-auto max-w-2xl">
-      <div className="flex flex-col gap-6 p-8 md:p-10">
+      <div className="flex flex-col gap-6 p-5 sm:p-8 md:p-10">
         <ProgressBar progress={progress} />
 
         <MotionConfig transition={{ duration: 0.35, ease: EASE_OUT }}>
