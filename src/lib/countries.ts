@@ -1,6 +1,8 @@
 export interface CountryData {
   slug: string;
   name: string;
+  /** ISO 3166-1 alpha-3, debe existir en countries.geo.json de dotted-map. */
+  code: string;
   /** Coordenadas de la capital, usadas para el mapa animado. */
   lat: number;
   lng: number;
@@ -15,6 +17,7 @@ export const countries: CountryData[] = [
   {
     slug: "colombia",
     name: "Colombia",
+    code: "COL",
     lat: 4.711,
     lng: -74.0721,
     ready: true,
@@ -25,6 +28,7 @@ export const countries: CountryData[] = [
   {
     slug: "chile",
     name: "Chile",
+    code: "CHL",
     lat: -33.4489,
     lng: -70.6693,
     ready: true,
@@ -35,6 +39,7 @@ export const countries: CountryData[] = [
   {
     slug: "peru",
     name: "Perú",
+    code: "PER",
     lat: -12.0464,
     lng: -77.0428,
     ready: true,
@@ -45,6 +50,7 @@ export const countries: CountryData[] = [
   {
     slug: "mexico",
     name: "México",
+    code: "MEX",
     lat: 19.4326,
     lng: -99.1332,
     ready: true,

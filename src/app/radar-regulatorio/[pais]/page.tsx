@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { CountryMap } from "@/components/CountryMap";
 import { LinkButton } from "@/components/ui/texture-button";
 import { countries, getCountry } from "@/lib/countries";
 import { lawsByCountry } from "@/lib/laws";
@@ -43,28 +44,34 @@ export default async function CountryPage({
     <>
       <MegaMenu />
       <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-16 md:px-14 md:pt-32 md:pb-24 lg:px-20">
-        <Reveal>
-          <Link
-            href="/radar-regulatorio"
-            className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-indigo-600"
-          >
-            <ArrowLeft className="size-4" aria-hidden />
-            Volver al radar
-          </Link>
+        <div className="flex flex-col items-start gap-10 md:flex-row md:items-center md:justify-between md:gap-8">
+          <Reveal className="max-w-2xl">
+            <Link
+              href="/radar-regulatorio"
+              className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-indigo-600"
+            >
+              <ArrowLeft className="size-4" aria-hidden />
+              Volver al radar
+            </Link>
 
-          <span className="mb-4 block text-xs font-semibold tracking-[0.08em] text-indigo-600 uppercase">
-            Radar regulatorio
-          </span>
-          <h1 className="mb-4 text-4xl font-medium text-neutral-900 md:text-5xl">{country.name}</h1>
-          <p className="max-w-2xl text-lg leading-[1.35] font-light text-neutral-600">{country.teaser}</p>
+            <span className="mb-4 block text-xs font-semibold tracking-[0.08em] text-indigo-600 uppercase">
+              Radar regulatorio
+            </span>
+            <h1 className="mb-4 text-4xl font-medium text-neutral-900 md:text-5xl">{country.name}</h1>
+            <p className="text-lg leading-[1.35] font-light text-neutral-600">{country.teaser}</p>
 
-          {hasAssessment && (
-            <LinkButton href={`/radar-regulatorio/${country.slug}/assessment`} variant="accent" size="lg" className="mt-6 w-fit">
-              Iniciar diagnóstico
-              <ArrowRight className="size-4" aria-hidden />
-            </LinkButton>
-          )}
-        </Reveal>
+            {hasAssessment && (
+              <LinkButton href={`/radar-regulatorio/${country.slug}/assessment`} variant="accent" size="lg" className="mt-6 w-fit">
+                Iniciar diagnóstico
+                <ArrowRight className="size-4" aria-hidden />
+              </LinkButton>
+            )}
+          </Reveal>
+
+          <Reveal delay={0.1} className="shrink-0 self-center">
+            <CountryMap code={country.code} lat={country.lat} lng={country.lng} height={280} />
+          </Reveal>
+        </div>
 
         {countryLaws.length > 0 ? (
           <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
