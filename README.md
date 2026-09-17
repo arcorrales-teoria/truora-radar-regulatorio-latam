@@ -41,12 +41,13 @@ En la práctica esto significa:
 
 ## Colores
 
-No hay tokens de marca — son literales de Tailwind (`indigo-50` a `indigo-950`), elegidos a mano:
+No hay tokens de marca — son literales de Tailwind, elegidos a mano. **(Actualizado — se abandonó la rampa de degradado.)**
 
-- **Rampa de color de la página principal:** las secciones de `/radar-regulatorio` suben de intensidad de morado de arriba hacia abajo, sin retroceder, hasta hacer match con el footer (`indigo-900`). Orden real: Hero `indigo-50→200` → banda `indigo-200` → Próximos vencimientos `indigo-200→300` → Cards por país `indigo-300→400` → CTA de diagnóstico `indigo-400→700` → Footer `indigo-900` sólido. **Si agregás o reordenás una sección, respetá esta rampa** — no vuelvas a un tono más claro que el de la sección anterior.
-- **Accent de interacción:** `indigo-600` (botones, pill activo).
-- **Líneas decorativas** (`HeroLines.tsx`, `SectionLines.tsx`, `PageRails.tsx`): `#4338ca` (indigo-700). Se probó con `#818cf8` (indigo-400) primero y se veía "lavado" contra los fondos de sección, que también son morados — necesita ser notablemente más oscuro que el fondo para leerse, no solo más transparente.
-- **Fondo oscuro reutilizado** en cards/CTA/footer: `indigo-900`/`indigo-950` — no introducir un negro nuevo.
+- **Fondo de página: blanco liso (`bg-white`) en todas las secciones**, sin excepción — Hero, banda de leyes, "Un radar, todas las leyes de LATAM", "Próximos vencimientos", CTA de diagnóstico y **Footer** (el footer dejó de ser oscuro). Antes había una rampa de degradado que subía de intensidad de morado sección a sección hasta el footer `indigo-900` — se eliminó a pedido explícito del usuario ("eliminemos el fondo degradado, que mejor sea todo blanco"). **No reintroducir gradientes de sección.**
+- **Un solo morado estandarizado: `indigo-600`.** Antes había una mezcla de `indigo-600` (botones/accent) e `indigo-900`/`950` ("se leía como azul medianoche, no morado" — palabras del usuario) en cards oscuras (diagnóstico, countdown, panel de TestCta, burbuja/card de país del Hero). Ahora TODO eso usa el mismo `indigo-600` sólido (sin degradado): botones, líneas decorativas, y el fondo de las cards/paneles oscuros que SÍ siguen siendo oscuros a propósito (el fondo de PÁGINA es blanco, pero las cards de contenido oscuro se mantienen como acentos de contraste).
+- **Ojo con "activo/seleccionado" sobre una card ya `indigo-600`:** si el estado activo también usa `indigo-600`, se vuelve invisible contra su propio fondo. Patrón ya aplicado en varios lugares (pill activa de `CountryTabs`, país/sector seleccionado y botón final de `TestCta`): el estado activo/seleccionado usa **blanco sólido con texto/ícono `indigo-600`**, no una variante de morado.
+- **Líneas decorativas** (`HeroLines.tsx`, `SectionLines.tsx`, `PageRails.tsx`, `SolidFrame.tsx`): `#4338ca` (indigo-700), trazo **continuo** (no punteado — se reemplazó todo el punteado del sitio por líneas sólidas). Se probó con `#818cf8` (indigo-400) primero y se veía "lavado" contra fondos morados — ya no aplica del todo ahora que el fondo de página es blanco, pero se mantuvo el mismo indigo-700 por consistencia con las cards oscuras que sí siguen siendo moradas.
+- **Excepciones documentadas, no tocar sin preguntar primero:** (1) los badges de color por país en `LawCountdownCard` (azul/verde/rosa, distinguen CO/CL/PE/MX, no es parte del eje morado/medianoche); (2) las conexiones animadas entre países de `LatamMap.tsx` (puntos punteados que fluyen) — reemplazan a propósito una línea de respaldo estática que se pidió quitar en una ronda anterior; convertirlas a sólido eliminaría esa animación de señal.
 
 ## Bug real de CSS a tener siempre presente: Cascade Layers
 
