@@ -2,17 +2,17 @@
 
 import { useReducedMotion } from "motion/react";
 import { SectionTick } from "@/components/SectionTick";
-import { DashedFrame } from "@/components/DashedFrame";
+import { SolidFrame } from "@/components/SolidFrame";
 
 const MESSAGE = "Ayudando a cumplir la regulación desde los procesos";
 const REPEATS = Array.from({ length: 6 });
 
 // Mismo inset que usan los PageRails (left-3/md:left-7/lg:left-10): los
 // lados verticales del cuadro terminan exactamente donde pasan las líneas
-// verticales de la página. El marco usa `DashedFrame` (mismo ritmo de dash
-// exacto que el resto de líneas del sitio) en vez del `border-dashed`
-// nativo de CSS, que se veía con un patrón distinto — y es estático a
-// propósito: lo único que se mueve es el texto del marquee adentro.
+// verticales de la página. El marco usa `SolidFrame` (línea continua, mismo
+// idioma que el resto de líneas del sitio) en vez del `border-dashed`
+// nativo de CSS — y es estático a propósito: lo único que se mueve es el
+// texto del marquee adentro.
 const RAIL_INSET = "mx-3 md:mx-7 lg:mx-10";
 const BOX = `overflow-hidden ${RAIL_INSET}`;
 
@@ -38,9 +38,9 @@ export function RegulationBand() {
     return (
       <div className="relative bg-indigo-200">
         <SectionTick />
-        <DashedFrame className={BOX}>
+        <SolidFrame className={BOX}>
           <p className="px-6 py-8 text-center text-base font-semibold tracking-[0.08em] text-indigo-900 uppercase">{MESSAGE}</p>
-        </DashedFrame>
+        </SolidFrame>
       </div>
     );
   }
@@ -48,12 +48,12 @@ export function RegulationBand() {
   return (
     <div className="relative bg-indigo-200 py-8">
       <SectionTick />
-      <DashedFrame className={BOX}>
+      <SolidFrame className={BOX}>
         <div className="flex w-max animate-[marquee_38s_linear_infinite] pl-6">
           <MessageGroup />
           <MessageGroup hidden />
         </div>
-      </DashedFrame>
+      </SolidFrame>
     </div>
   );
 }

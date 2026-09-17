@@ -11,8 +11,8 @@ import { SectionTick } from "@/components/SectionTick";
 import { cn } from "@/lib/utils";
 
 const LINES = [
-  { d: "M -50 80 C 320 10, 620 190, 980 70 S 1500 140, 1750 50", dash: 6, gap: 10, duration: "10s", opacity: 0.26 },
-  { d: "M -50 620 C 300 560, 620 700, 980 600 S 1480 680, 1750 600", dash: 5, gap: 12, duration: "12s", opacity: 0.22 },
+  { d: "M -50 80 C 320 10, 620 190, 980 70 S 1500 140, 1750 50", opacity: 0.26 },
+  { d: "M -50 620 C 300 560, 620 700, 980 600 S 1480 680, 1750 600", opacity: 0.22 },
 ];
 
 const FLAG: Record<string, string> = {
@@ -48,24 +48,29 @@ export default function CountryCards() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.05} className="mb-8 flex w-fit flex-wrap gap-1 rounded-full bg-white/70 p-1 backdrop-blur-sm">
-          {countries.map((country, index) => (
-            <button
-              key={country.slug}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={cn(
-                "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150",
-                activeIndex === index ? "bg-indigo-600 text-white" : "text-neutral-600 hover:text-neutral-900",
-              )}
-            >
-              <span aria-hidden>{FLAG[country.slug]}</span>
-              {country.name}
-              <span className={cn("text-xs", activeIndex === index ? "text-white/70" : "text-neutral-400")}>
-                {lawsByCountry(country.slug).length}
-              </span>
-            </button>
-          ))}
+        <Reveal delay={0.05} className="mb-8 flex flex-wrap gap-3">
+          {countries.map((country, index) => {
+            const isActive = activeIndex === index;
+            return (
+              <button
+                key={country.slug}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={cn(
+                  "flex items-center gap-2 rounded-full px-5 py-3 text-base font-medium shadow-sm transition-colors duration-150 active:scale-[0.96]",
+                  isActive ? "bg-indigo-600 text-white" : "bg-white/85 text-neutral-700 hover:bg-white",
+                )}
+              >
+                <span aria-hidden className="text-lg leading-none">
+                  {FLAG[country.slug]}
+                </span>
+                {country.name}
+                <span className={cn("text-sm", isActive ? "text-white/70" : "text-neutral-400")}>
+                  {lawsByCountry(country.slug).length}
+                </span>
+              </button>
+            );
+          })}
         </Reveal>
 
         {activeLaws.length > 0 ? (

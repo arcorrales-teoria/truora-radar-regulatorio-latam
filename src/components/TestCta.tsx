@@ -11,8 +11,8 @@ import { FINANCIAL_SUBCATEGORY_OPTIONS, getAssessment, type FinancialSubcategory
 import { cn } from "@/lib/utils";
 
 const LINES = [
-  { d: "M -50 60 C 300 -10, 620 150, 980 50 S 1500 110, 1750 30", dash: 6, gap: 10, duration: "10s", opacity: 0.28 },
-  { d: "M -50 460 C 300 520, 620 400, 980 480 S 1480 430, 1750 490", dash: 5, gap: 12, duration: "13s", opacity: 0.22 },
+  { d: "M -50 60 C 300 -10, 620 150, 980 50 S 1500 110, 1750 30", opacity: 0.28 },
+  { d: "M -50 460 C 300 520, 620 400, 980 480 S 1480 430, 1750 490", opacity: 0.22 },
 ];
 
 const FLAGS: Record<string, string> = { colombia: "🇨🇴", chile: "🇨🇱", peru: "🇵🇪", mexico: "🇲🇽" };

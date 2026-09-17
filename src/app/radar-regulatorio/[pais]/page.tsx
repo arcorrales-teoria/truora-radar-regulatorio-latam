@@ -129,7 +129,7 @@ export default async function CountryPage({
           </div>
         ) : (
           <Reveal delay={0.1}>
-            <div className="mt-12 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
+            <div className="mt-12 rounded-2xl border border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
               Estamos terminando de investigar y cruzar esta regulación con la información de Truora. Vuelve pronto:
               esta página ya está indexada, el contenido se completa aquí mismo.
             </div>

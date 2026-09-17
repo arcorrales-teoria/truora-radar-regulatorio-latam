@@ -11,8 +11,8 @@ import { countries, getCountry } from "@/lib/countries";
 import { assessments, getAssessment, FINANCIAL_SUBCATEGORY_OPTIONS, type FinancialSubcategory } from "@/lib/assessment";
 
 const LINES = [
-  { d: "M -50 60 C 300 -10, 620 150, 980 50 S 1500 110, 1750 30", dash: 6, gap: 10, duration: "9s", opacity: 0.3 },
-  { d: "M -50 500 C 300 560, 620 440, 980 520 S 1480 470, 1750 530", dash: 5, gap: 12, duration: "12s", opacity: 0.22 },
+  { d: "M -50 60 C 300 -10, 620 150, 980 50 S 1500 110, 1750 30", opacity: 0.3 },
+  { d: "M -50 500 C 300 560, 620 440, 980 520 S 1480 470, 1750 530", opacity: 0.22 },
 ];
 
 export function generateStaticParams() {

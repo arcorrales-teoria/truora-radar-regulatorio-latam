@@ -7,8 +7,8 @@ import { SectionTick } from "@/components/SectionTick";
 import { LinkButton } from "@/components/ui/texture-button";
 
 const LINES = [
-  { d: "M -50 40 C 300 -30, 650 130, 1000 30 S 1500 90, 1750 10", dash: 6, gap: 10, duration: "9s", opacity: 0.3 },
-  { d: "M -50 260 C 280 340, 600 190, 950 290 S 1450 230, 1750 310", dash: 5, gap: 12, duration: "11s", opacity: 0.24 },
+  { d: "M -50 40 C 300 -30, 650 130, 1000 30 S 1500 90, 1750 10", opacity: 0.3 },
+  { d: "M -50 260 C 280 340, 600 190, 950 290 S 1450 230, 1750 310", opacity: 0.24 },
 ];
 
 /**

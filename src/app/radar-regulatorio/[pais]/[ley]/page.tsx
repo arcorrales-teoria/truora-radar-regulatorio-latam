@@ -108,7 +108,7 @@ export default async function LawPage({
         )}
 
         <Reveal delay={0.2}>
-          <div id="implementar" className="mt-10 scroll-mt-24 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
+          <div id="implementar" className="mt-10 scroll-mt-24 rounded-2xl border border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
             Estamos completando la guía de implementación paso a paso para esta regulación. Mientras tanto, agenda un
             diagnóstico con Truora para revisar cómo te afecta puntualmente.
           </div>
