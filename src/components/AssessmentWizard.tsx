@@ -10,7 +10,7 @@ import { LinkButton, TextureButton } from "@/components/ui/texture-button";
 import { cn } from "@/lib/utils";
 import { EASE_OUT } from "@/lib/ease";
 import { HubSpotForm } from "@/components/HubSpotForm";
-import { countryToHubSpot } from "@/lib/hubspot";
+import { countryToHubSpot, trackHubSpotVirtualPage } from "@/lib/hubspot";
 import {
   FINANCIAL_SUBCATEGORY_OPTIONS,
   HUBSPOT_INDUSTRY_FINANCIAL_SERVICES,
@@ -306,6 +306,28 @@ export function AssessmentWizard({
 
   const currentModule = phase === "question" ? moduleByQuestionId.get(questions[questionIndex].id) : undefined;
   const CurrentModuleIcon = currentModule ? MODULE_ICONS[currentModule.icon] : null;
+
+  // El wizard cambia de estado sin navegar a otra URL. Reportamos cada
+  // etapa como una vista virtual para construir el funnel directamente en
+  // HubSpot y asociarlo al contacto cuando complete el formulario.
+  useEffect(() => {
+    const base = `/radar-regulatorio/${countrySlug}/assessment`;
+    let virtualPath: string | null = null;
+
+    if (phase === "intake") virtualPath = `${base}/inicio`;
+    if (phase === "company") virtualPath = `${base}/empresa`;
+    if (phase === "product") virtualPath = `${base}/producto`;
+    if (phase === "outOfScope") virtualPath = `${base}/fuera-de-alcance`;
+    if (phase === "question") {
+      const moduleIndex = moduleByQuestionId.get(questions[questionIndex].id)?.index ?? 0;
+      virtualPath = `${base}/modulo-${moduleIndex + 1}/pregunta-${questionIndex + 1}`;
+    }
+    if (phase === "processing") virtualPath = `${base}/procesando`;
+    if (phase === "results" && !formSubmitted) virtualPath = `${base}/formulario`;
+    if (phase === "results" && formSubmitted) virtualPath = `${base}/completado`;
+
+    if (virtualPath) trackHubSpotVirtualPage(virtualPath);
+  }, [countrySlug, formSubmitted, moduleByQuestionId, phase, questionIndex, questions]);
 
   return (
     <TextureCardStyled className="mx-auto max-w-2xl">

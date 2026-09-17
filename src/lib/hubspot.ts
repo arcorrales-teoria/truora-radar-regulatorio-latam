@@ -12,6 +12,38 @@ export const HUBSPOT_FORM_ID = "1412f8f7-95e9-4792-9a1c-82358c1192d5";
 export const HUBSPOT_REGION = "na1";
 export const HUBSPOT_SCRIPT_SRC = "//js.hsforms.net/forms/embed/v2.js";
 
+declare global {
+  interface Window {
+    _hsq?: unknown[][];
+  }
+}
+
+/**
+ * Registra una vista virtual en HubSpot para medir el avance dentro de una
+ * experiencia SPA. Cada ruta se reporta una sola vez por pestaña para que
+ * volver atrás en el wizard no infle el funnel.
+ */
+export function trackHubSpotVirtualPage(path: string) {
+  if (typeof window === "undefined") return;
+
+  const storageKey = `hubspot-virtual-page:${path}`;
+  try {
+    if (window.sessionStorage.getItem(storageKey)) return;
+  } catch {
+    // El tracking sigue funcionando aunque el navegador bloquee storage.
+  }
+
+  window._hsq = window._hsq || [];
+  window._hsq.push(["setPath", path]);
+  window._hsq.push(["trackPageView"]);
+
+  try {
+    window.sessionStorage.setItem(storageKey, "1");
+  } catch {
+    // No interrumpimos el diagnóstico si storage no está disponible.
+  }
+}
+
 /**
  * País -> valor real del dropdown `country` en HubSpot. Confirmado 2026-09-17
  * directo contra la definición real del formulario (`GET
