@@ -68,8 +68,13 @@ export default async function CountryPage({
             )}
           </Reveal>
 
-          <Reveal delay={0.1} className="shrink-0 self-center">
-            <CountryMap code={country.code} lat={country.lat} lng={country.lng} height={440} />
+          <Reveal delay={0.1} className="w-full shrink-0 md:w-[380px] lg:w-[460px] xl:w-[520px]">
+            <CountryMap
+              code={country.code}
+              lat={country.lat}
+              lng={country.lng}
+              className="h-64 w-full sm:h-80 md:h-[380px] lg:h-[460px] xl:h-[520px]"
+            />
           </Reveal>
         </div>
 
