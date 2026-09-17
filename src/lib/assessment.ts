@@ -41,11 +41,11 @@ export interface CountryAssessment {
  * ANTES de arrancar las 10 preguntas, no después.
  */
 export const PRODUCT_OPTIONS = [
-  { value: "identidad", label: "Validación de identidad", inScope: true },
-  { value: "antecedentes", label: "Verificación de antecedentes", inScope: true },
-  { value: "firma", label: "Firma electrónica", inScope: false },
-  { value: "whatsapp", label: "Agentes por WhatsApp", inScope: false },
-  { value: "otro", label: "Otro", inScope: false },
+  { value: "identidad", label: "Validación de identidad", inScope: true, hubspotProduct: "idv" },
+  { value: "antecedentes", label: "Verificación de antecedentes", inScope: true, hubspotProduct: "checks" },
+  { value: "firma", label: "Firma electrónica", inScope: false, hubspotProduct: "zapsign" },
+  { value: "whatsapp", label: "Agentes por WhatsApp", inScope: false, hubspotProduct: undefined },
+  { value: "otro", label: "Otro", inScope: false, hubspotProduct: undefined },
 ] as const;
 
 export type ProductArea = (typeof PRODUCT_OPTIONS)[number]["value"];
@@ -69,6 +69,9 @@ export function isInScope(product: ProductArea): boolean {
  */
 export const INDUSTRY_NORMALIZED = "Servicios Financieros";
 
+/** Valor real de la propiedad `industry_normalized` en HubSpot para "Servicios Financieros" (confirmado por captura de pantalla del editor del campo). */
+export const HUBSPOT_INDUSTRY_FINANCIAL_SERVICES = "financial_services";
+
 export const FINANCIAL_SUBCATEGORY_OPTIONS = [
   { value: "banco", label: "Banco", hubspotSubcategory: "Banks" },
   { value: "fintech", label: "Fintech", hubspotSubcategory: "Fintechs" },
@@ -83,12 +86,18 @@ export function subcategoryLabel(value: string | undefined): string | undefined 
 }
 
 /**
- * Cargo del intake, con su equivalencia exacta a `job_title_normalized` de
- * HubSpot (ver memoria hubspot-reglas-y-buenas-practicas) para que este dato
- * quede listo para conectarse el día que se integre el formulario. El
- * mapeo lo dio el usuario directamente:
- * Analista -> Colaborador Individual/Especialista, Manager -> Gerente/Manager,
- * Head -> Director, Founder -> Founder/Co-Founder.
+ * Cargo del intake, con su equivalencia a `job_title_normalized` de HubSpot
+ * — actualizado (2026-09-17) con los valores REALES del dropdown, tomados
+ * directamente de una captura de pantalla del editor de esa propiedad en
+ * HubSpot (Field Type: Dropdown). Opciones visibles ahí: founder, c_level,
+ * vp, director, manager — con un "Show more" que esconde opciones
+ * adicionales no vistas.
+ *
+ * "analista" queda SIN mapear (`hubspotJobTitle: undefined`) a propósito:
+ * ninguna de las 5 opciones visibles calza con "colaborador individual/
+ * especialista", y no se puede adivinar qué hay detrás de "Show more" sin
+ * verlo. Antes de mapearlo, abrir esa propiedad en HubSpot y revisar la
+ * lista completa de opciones.
  *
  * PENDIENTE (marcado explícitamente por el usuario, no resuelto en este
  * archivo): "a partir del cargo que tenga cambia la estructura de las
@@ -99,10 +108,10 @@ export function subcategoryLabel(value: string | undefined): string | undefined 
  * que rehacer.
  */
 export const ROLE_OPTIONS = [
-  { value: "analista", label: "Analista", hubspotJobTitle: "Colaborador Individual/Especialista" },
-  { value: "manager", label: "Manager", hubspotJobTitle: "Gerente/Manager" },
-  { value: "head", label: "Head", hubspotJobTitle: "Director" },
-  { value: "founder", label: "Founder", hubspotJobTitle: "Founder/Co-Founder" },
+  { value: "analista", label: "Analista", hubspotJobTitle: undefined },
+  { value: "manager", label: "Manager", hubspotJobTitle: "manager" },
+  { value: "head", label: "Head", hubspotJobTitle: "director" },
+  { value: "founder", label: "Founder", hubspotJobTitle: "founder" },
 ] as const;
 
 export type Role = (typeof ROLE_OPTIONS)[number]["value"];

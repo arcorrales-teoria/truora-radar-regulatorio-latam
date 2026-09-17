@@ -9,9 +9,11 @@ import { TextureCardStyled } from "@/components/ui/texture-card";
 import { LinkButton, TextureButton } from "@/components/ui/texture-button";
 import { cn } from "@/lib/utils";
 import { EASE_OUT } from "@/lib/ease";
-import { isCorporateEmail, isValidEmailFormat } from "@/lib/email";
+import { HubSpotForm } from "@/components/HubSpotForm";
+import { countryToHubSpot } from "@/lib/hubspot";
 import {
   FINANCIAL_SUBCATEGORY_OPTIONS,
+  HUBSPOT_INDUSTRY_FINANCIAL_SERVICES,
   PRODUCT_OPTIONS,
   ROLE_OPTIONS,
   firstName,
@@ -175,9 +177,7 @@ export function AssessmentWizard({
   const [subcategory, setSubcategory] = useState<FinancialSubcategory | null>(initialSubcategory ?? null);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(() => questions.map(() => null));
-  const [email, setEmail] = useState("");
-  const [emailUnlocked, setEmailUnlocked] = useState(false);
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [ref, bounds] = useMeasure();
 
   // La industria llega resuelta por query param cuando se entra desde el
@@ -237,17 +237,13 @@ export function AssessmentWizard({
     setQuestionIndex((i) => i - 1);
   };
 
-  const handleUnlockResults = () => {
-    if (!isValidEmailFormat(email)) {
-      setEmailError("Ingresa un correo válido.");
-      return;
-    }
-    if (!isCorporateEmail(email)) {
-      setEmailError("Usa tu correo corporativo, no uno personal (Gmail, Hotmail, etc.).");
-      return;
-    }
-    setEmailError(null);
-    setEmailUnlocked(true);
+  const hubspotPrefill = {
+    firstname: name,
+    company,
+    jobTitle: ROLE_OPTIONS.find((r) => r.value === role)?.hubspotJobTitle,
+    industry: HUBSPOT_INDUSTRY_FINANCIAL_SERVICES,
+    product: product ? PRODUCT_OPTIONS.find((p) => p.value === product)?.hubspotProduct : undefined,
+    country: countryToHubSpot(countrySlug),
   };
 
   // "Generando tu reporte": pausa breve y puramente visual antes de revelar
@@ -574,11 +570,11 @@ export function AssessmentWizard({
                       Hallazgos para {name1}
                     </span>
 
-                    {!emailUnlocked ? (
+                    {!formSubmitted ? (
                       <>
                         <h2 className="mt-2 text-2xl font-medium text-white">Tu resultado está listo</h2>
                         <p className="mt-2 text-sm text-white/60">
-                          Déjanos tu correo corporativo y te mostramos el detalle completo frente a {assessment.lawLabel}.
+                          Completa tus datos y te mostramos el detalle completo frente a {assessment.lawLabel}.
                         </p>
 
                         <ul className="mt-6 flex flex-col gap-2.5">
@@ -590,24 +586,9 @@ export function AssessmentWizard({
                           ))}
                         </ul>
 
-                        <div className="mt-6 max-w-sm">
-                          <TextField
-                            label="Correo corporativo"
-                            type="email"
-                            value={email}
-                            onChange={(v) => {
-                              setEmail(v);
-                              if (emailError) setEmailError(null);
-                            }}
-                            placeholder="nombre@tuempresa.com"
-                          />
-                          {emailError && <p className="mt-2 text-sm text-red-300">{emailError}</p>}
+                        <div className="mt-6 rounded-2xl bg-white p-4 md:p-6">
+                          <HubSpotForm prefill={hubspotPrefill} onFormSubmitted={() => setFormSubmitted(true)} />
                         </div>
-
-                        <TextureButton variant="minimal" size="lg" className="mt-6 w-fit text-neutral-900" onClick={handleUnlockResults}>
-                          Ver mi resultado completo
-                          <ArrowRight className="size-4" aria-hidden />
-                        </TextureButton>
                       </>
                     ) : (
                       <>
@@ -616,7 +597,7 @@ export function AssessmentWizard({
                         </h2>
                         <p className="mt-2 text-sm text-white/60">
                           Esto no es un veredicto de cumplimiento legal: son brechas operativas frente a {assessment.lawLabel}.
-                          Te enviamos este mismo detalle a {email}.
+                          Te enviamos una copia de este detalle a tu correo.
                         </p>
 
                         {minimumGaps.length > 0 && (
