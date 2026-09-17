@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, RefreshCw, Users, TriangleAlert } from "lucide-react";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
@@ -70,8 +70,45 @@ export default async function LawPage({
           </div>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <div id="implementar" className="mt-14 scroll-mt-24 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
+        {(law.whatChanged || law.whoItAffects || law.impact) && (
+          <Reveal delay={0.1}>
+            <div className="mt-14">
+              <h2 className="mb-6 text-2xl font-medium text-neutral-900">Qué necesitas saber</h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                {law.whatChanged && (
+                  <div className="rounded-2xl border border-neutral-200 bg-white p-6">
+                    <div className="mb-3 flex items-center gap-2 text-indigo-600">
+                      <RefreshCw className="size-4" aria-hidden />
+                      <span className="text-xs font-semibold tracking-[0.06em] uppercase">Qué cambió</span>
+                    </div>
+                    <p className="text-sm leading-relaxed font-light text-neutral-600">{law.whatChanged}</p>
+                  </div>
+                )}
+                {law.whoItAffects && (
+                  <div className="rounded-2xl border border-neutral-200 bg-white p-6">
+                    <div className="mb-3 flex items-center gap-2 text-indigo-600">
+                      <Users className="size-4" aria-hidden />
+                      <span className="text-xs font-semibold tracking-[0.06em] uppercase">A quién afecta</span>
+                    </div>
+                    <p className="text-sm leading-relaxed font-light text-neutral-600">{law.whoItAffects}</p>
+                  </div>
+                )}
+                {law.impact && (
+                  <div className="rounded-2xl border border-neutral-200 bg-white p-6">
+                    <div className="mb-3 flex items-center gap-2 text-indigo-600">
+                      <TriangleAlert className="size-4" aria-hidden />
+                      <span className="text-xs font-semibold tracking-[0.06em] uppercase">Qué impacto tiene</span>
+                    </div>
+                    <p className="text-sm leading-relaxed font-light text-neutral-600">{law.impact}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Reveal>
+        )}
+
+        <Reveal delay={0.2}>
+          <div id="implementar" className="mt-10 scroll-mt-24 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-8 text-sm font-light text-neutral-500">
             Estamos completando la guía de implementación paso a paso para esta regulación. Mientras tanto, agenda un
             diagnóstico con Truora para revisar cómo te afecta puntualmente.
           </div>
