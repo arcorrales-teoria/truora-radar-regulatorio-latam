@@ -20,7 +20,7 @@ export default function MegaMenu() {
             width={100}
             height={24}
             priority
-            className="w-[92px] brightness-0 invert sm:w-[100px]"
+            className="h-auto w-[92px] brightness-0 invert sm:w-[100px]"
           />
         </Link>
 
