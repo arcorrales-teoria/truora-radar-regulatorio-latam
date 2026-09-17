@@ -53,7 +53,7 @@ export default function Hero() {
             el flujo "que las personas dejen los datos sutilmente" que se
             construyó a propósito. Este botón lleva ahí, no directo a un país.
           */}
-          <LinkButton href="/radar-regulatorio#test" variant="minimal" size="lg" className="w-fit">
+          <LinkButton href="/radar-regulatorio#test" variant="minimal" size="lg" className="w-fit text-neutral-900">
             Ver mi diagnóstico
             <ArrowRight className="size-4" aria-hidden />
           </LinkButton>

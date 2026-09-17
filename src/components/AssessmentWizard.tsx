@@ -52,8 +52,8 @@ const MODULE_ICONS: Record<ModuleIcon, typeof ShieldCheck> = {
  * borde + sombra, capa interior con degradado + resalte inset) para que
  * los pills del wizard no se sientan planos al lado del botón — pedido
  * explícito de coherencia visual. El activo usa blanco sólido (no otro
- * indigo): la card ya es bg-indigo-600, así que un pill activo también
- * indigo-600 se volvía invisible contra su propio fondo.
+ * indigo): la card ya es oscura (indigo-950), así que un pill activo del
+ * mismo tono se volvía invisible contra su propio fondo.
  */
 function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (

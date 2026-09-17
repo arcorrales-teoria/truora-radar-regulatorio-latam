@@ -43,7 +43,7 @@ export default function TestCta() {
       <SectionLines lines={LINES} viewBox="0 0 1600 520" />
       <SectionTick />
       <div className="relative z-10 mx-auto max-w-[1560px] px-6 py-16 md:px-14 md:py-24 lg:px-20">
-        <Reveal className="relative overflow-hidden rounded-[32px] bg-indigo-600 p-10 md:p-16">
+        <Reveal className="relative overflow-hidden rounded-[32px] bg-indigo-950 p-10 md:p-16">
           <div className="max-w-2xl">
             <span className="w-fit rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-[0.08em] text-white uppercase">
               Regulatory Impact Assessment

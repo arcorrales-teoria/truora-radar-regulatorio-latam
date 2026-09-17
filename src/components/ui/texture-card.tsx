@@ -5,17 +5,17 @@ import { cn } from "@/lib/utils";
  * Adaptado de la referencia "TextureCard" que compartió el usuario: mismo
  * truco de bordes anidados (4 capas, cada una un pelo más chica) para dar
  * una sensación de bisel/profundidad. Un solo tema oscuro (índigo, para
- * coherencia con el resto de tarjetas oscuras del sitio) en vez del
- * light/dark de la referencia, porque estas cards siempre van sobre fondo
- * claro como elementos oscuros intencionales, no cambian con el tema.
- * Color sólido (no degradado indigo-900→950, ese leía como "azul medianoche"
- * en vez de morado): un solo indigo-600, el mismo morado estandarizado que
- * usan botones y líneas en el resto del sitio.
+ * coherencia con el resto de tarjetas oscuras del sitio).
+ * Color sólido `indigo-950` ("azul medianoche"): el fondo de página ahora
+ * también es azul medianoche (`#01022e`), así que esta card usa el mismo
+ * registro de color en vez del `indigo-600` más brillante que se usó
+ * cuando el fondo de página era blanco — pedido explícito de coherencia
+ * ("estos cards también midnight blue").
  */
 
 const TextureCardStyled = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn("flex flex-col rounded-[24px] border border-black/40 bg-indigo-600", className)}
+    <div ref={ref} className={cn("flex flex-col rounded-[24px] border border-black/40 bg-indigo-950", className)}
       {...props}
     >
       {/*

@@ -123,7 +123,7 @@ export default async function LawPage({
               href={hasAssessment ? `/radar-regulatorio/${country.slug}/assessment` : "/radar-regulatorio#test"}
               variant="minimal"
               size="lg"
-              className="mt-5 w-fit"
+              className="mt-5 w-fit text-neutral-900"
             >
               Hacer el test
               <ArrowRight className="size-4" aria-hidden />

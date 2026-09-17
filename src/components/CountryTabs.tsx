@@ -68,7 +68,7 @@ export function CountryTabs({
 
   return (
     <div className="flex w-full max-w-lg flex-col gap-3">
-      <div className="flex w-fit gap-1 rounded-full bg-indigo-600 p-1 shadow-inner">
+      <div className="flex w-fit gap-1 rounded-full bg-indigo-950 p-1 shadow-inner">
         {countries.map((country, index) => (
           <button
             key={country.slug}
@@ -106,7 +106,7 @@ export function CountryTabs({
                 animate="active"
                 exit="exit"
               >
-                <div className="rounded-3xl bg-indigo-600 p-6">
+                <div className="rounded-3xl bg-indigo-950 p-6">
                   <p className="text-base leading-6 text-white">
                     <span className="font-semibold">{active.name}.</span>{" "}
                     <span className="text-white/60">{active.hook}</span>
