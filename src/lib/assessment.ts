@@ -121,7 +121,7 @@ export function maxScore(assessment: CountryAssessment): number {
 }
 
 // ---------------------------------------------------------------------------
-// Colombia — Ley 2573 de 2026 ("La Ley del Yo No Fui"). Preguntas y
+// Colombia — Ley 2573 de 2026 ("Ley de Suplantación de Identidad"). Preguntas y
 // respuestas reales, tomadas tal cual del diagnóstico de referencia que
 // pasó el usuario (screenshots de la versión más madura de esta misma
 // pieza) — incluye qué preguntas son "Mínimo Regulatorio" (co-4 a co-7).

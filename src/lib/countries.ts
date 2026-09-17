@@ -23,8 +23,7 @@ export const countries: CountryData[] = [
     lat: 4.711,
     lng: -74.0721,
     ready: true,
-    teaser:
-      "La Ley 2573 de 2026, la que ya venimos llamando “La Ley del Yo No Fui”, cambia quién debe probar una suplantación de identidad.",
+    teaser: "La Ley 2573 de 2026 cambia quién debe probar una suplantación de identidad.",
     hook: "Si tu empresa da crédito, cobra o reporta a una central de riesgo, tienes que revisar tu proceso de verificación de identidad.",
     image: "/countries/colombia.png",
   },

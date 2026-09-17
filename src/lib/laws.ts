@@ -23,7 +23,7 @@ export const laws: Law[] = [
     slug: "ley-2573",
     countrySlug: "colombia",
     name: "Ley 2573 de 2026",
-    nickname: "La Ley del Yo No Fui",
+    nickname: "Ley de Suplantación de Identidad",
     description:
       "Cambia quién debe probar una suplantación de identidad: ya no es la víctima, es la entidad la que debe demostrar que verificó bien.",
     status: "Vigencia parcial desde may. 2026",
@@ -42,7 +42,7 @@ export const laws: Law[] = [
     slug: "ncg-538",
     countrySlug: "chile",
     name: "NCG 538 (CMF)",
-    nickname: "La Norma de la Doble Llave",
+    nickname: "Norma de Autenticación Reforzada",
     description:
       "Autenticación reforzada del cliente: dos factores independientes en onboarding, transferencias y cambio de datos.",
     status: "Obligatoria desde jul. 2026",
@@ -105,7 +105,7 @@ export const laws: Law[] = [
     slug: "sbs-01747-2026",
     countrySlug: "peru",
     name: "SBS 01747-2026",
-    nickname: "El Reglamento de Quién Responde por la Fintech",
+    nickname: "Reglamento de Responsabilidad en la Fintech",
     description: "Reglamento de Banking as a Service: la responsabilidad de KYC siempre queda en la entidad supervisada.",
     status: "Vigente ~dic. 2026",
     deadline: "2026-12-28",
