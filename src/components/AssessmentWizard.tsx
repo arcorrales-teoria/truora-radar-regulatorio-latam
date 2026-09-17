@@ -26,15 +26,15 @@ import {
 
 /**
  * Wizard de una sola pregunta por pantalla:
- * Intro -> Intake (Nombre + Cargo) -> Industria (solo si NO llegó por query
- * param desde el banner de home — si ya se sabe, se salta esta pantalla) ->
- * Producto (su propia pantalla, es la pregunta GATE: determina si el
- * proceso aplica) -> [Fuera de alcance si no aplica] -> 10 preguntas ->
- * Contexto (solo Empresa, la industria ya quedó resuelta antes) ->
- * Procesando -> Hallazgos.
+ * Intro -> Intake (Nombre + Cargo) -> Empresa (Empresa + Sector, siempre se
+ * visita — el sector se salta si ya llegó resuelto por query param desde el
+ * banner de home, pero el nombre de la empresa se pregunta siempre porque
+ * determina el nivel de cumplimiento, no solo el sector) -> Producto (su
+ * propia pantalla, es la pregunta GATE: determina si el proceso aplica) ->
+ * [Fuera de alcance si no aplica] -> 10 preguntas -> Procesando -> Hallazgos.
  */
 
-type Phase = "intro" | "intake" | "industry" | "product" | "outOfScope" | "question" | "context" | "processing" | "results";
+type Phase = "intro" | "intake" | "company" | "product" | "outOfScope" | "question" | "processing" | "results";
 
 const MODULE_ICONS: Record<ModuleIcon, typeof ShieldCheck> = {
   "id-card": IdCard,
@@ -197,8 +197,7 @@ export function AssessmentWizard({
   const industryAlreadyKnown = Boolean(initialSubcategory);
 
   const canContinueIntake = name.trim().length > 0 && role !== null;
-  const canContinueIndustry = subcategory !== null;
-  const canContinueContext = company.trim().length > 0;
+  const canContinueCompany = company.trim().length > 0 && (industryAlreadyKnown || subcategory !== null);
 
   const goTo = (next: Phase, dir: number) => {
     setDirection(dir);
@@ -207,11 +206,11 @@ export function AssessmentWizard({
 
   const handleContinueIntake = () => {
     if (!canContinueIntake) return;
-    goTo(industryAlreadyKnown ? "product" : "industry", 1);
+    goTo("company", 1);
   };
 
-  const handleContinueIndustry = () => {
-    if (!canContinueIndustry) return;
+  const handleContinueCompany = () => {
+    if (!canContinueCompany) return;
     goTo("product", 1);
   };
 
@@ -235,7 +234,7 @@ export function AssessmentWizard({
       setDirection(1);
       setQuestionIndex((i) => i + 1);
     } else {
-      goTo("context", 1);
+      goTo("processing", 1);
     }
   };
 
@@ -246,11 +245,6 @@ export function AssessmentWizard({
     }
     setDirection(-1);
     setQuestionIndex((i) => i - 1);
-  };
-
-  const handleContinueContext = () => {
-    if (!canContinueContext) return;
-    goTo("processing", 1);
   };
 
   const handleUnlockResults = () => {
@@ -316,15 +310,13 @@ export function AssessmentWizard({
       ? 0
       : phase === "intake"
         ? 0.02
-        : phase === "industry"
+        : phase === "company"
           ? 0.04
           : phase === "product" || phase === "outOfScope"
             ? 0.06
             : phase === "question"
               ? 0.08 + (questionIndex / questions.length) * 0.72
-              : phase === "context"
-                ? 0.84
-                : 1;
+              : 1;
 
   const currentModule = phase === "question" ? moduleByQuestionId.get(questions[questionIndex].id) : undefined;
   const CurrentModuleIcon = currentModule ? MODULE_ICONS[currentModule.icon] : null;
@@ -418,22 +410,39 @@ export function AssessmentWizard({
                   </motion.div>
                 )}
 
-                {phase === "industry" && (
-                  <motion.div key="industry" custom={direction} variants={variants} initial="initial" animate="active" exit="exit">
+                {phase === "company" && (
+                  <motion.div key="company" custom={direction} variants={variants} initial="initial" animate="active" exit="exit">
                     <span className="text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">
                       {assessment.lawLabel}
                     </span>
-                    <h2 className="mt-2 text-2xl leading-snug font-medium text-white">
-                      Necesitamos saber el sector al que perteneces para saber qué leyes aplican
-                    </h2>
+                    <h2 className="mt-2 text-2xl font-medium text-white">Cuéntanos de tu empresa</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-white/60">
+                      Las leyes, aunque aplican para tu sector, varían mucho según el tipo de empresa y su producto, lo
+                      que determina el nivel de cumplimiento que deben tener. Por eso nos gustaría saber el nombre de tu
+                      empresa y el sector en el que están.
+                    </p>
 
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {FINANCIAL_SUBCATEGORY_OPTIONS.map((opt) => (
-                        <Pill key={opt.value} active={subcategory === opt.value} onClick={() => setSubcategory(opt.value)}>
-                          {opt.label}
-                        </Pill>
-                      ))}
+                    <div className="mt-6">
+                      <TextField label="Empresa" value={company} onChange={setCompany} placeholder="Nombre de tu empresa" />
                     </div>
+
+                    {industryAlreadyKnown && subcategory ? (
+                      <p className="mt-4 text-xs text-white/40">
+                        Sector: Servicios Financieros ·{" "}
+                        {FINANCIAL_SUBCATEGORY_OPTIONS.find((s) => s.value === subcategory)?.label}
+                      </p>
+                    ) : (
+                      <div className="mt-6 flex flex-col gap-2">
+                        <span className="text-xs font-semibold tracking-[0.08em] text-white/50 uppercase">Sector</span>
+                        <div className="flex flex-wrap gap-2">
+                          {FINANCIAL_SUBCATEGORY_OPTIONS.map((opt) => (
+                            <Pill key={opt.value} active={subcategory === opt.value} onClick={() => setSubcategory(opt.value)}>
+                              {opt.label}
+                            </Pill>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="mt-8 flex gap-3">
                       <TextureButton variant="secondary" size="lg" className="w-fit" onClick={() => goTo("intake", -1)}>
@@ -444,8 +453,8 @@ export function AssessmentWizard({
                         variant="accent"
                         size="lg"
                         className="w-fit disabled:pointer-events-none disabled:opacity-40"
-                        disabled={!canContinueIndustry}
-                        onClick={handleContinueIndustry}
+                        disabled={!canContinueCompany}
+                        onClick={handleContinueCompany}
                       >
                         Continuar
                         <ArrowRight className="size-4" aria-hidden />
@@ -472,12 +481,7 @@ export function AssessmentWizard({
                       ))}
                     </div>
 
-                    <TextureButton
-                      variant="secondary"
-                      size="lg"
-                      className="mt-8 w-fit"
-                      onClick={() => goTo(industryAlreadyKnown ? "intake" : "industry", -1)}
-                    >
+                    <TextureButton variant="secondary" size="lg" className="mt-8 w-fit" onClick={() => goTo("company", -1)}>
                       <ArrowLeft className="size-4" aria-hidden />
                       Atrás
                     </TextureButton>
@@ -544,63 +548,6 @@ export function AssessmentWizard({
                       <ArrowLeft className="size-4" aria-hidden />
                       Atrás
                     </TextureButton>
-                  </motion.div>
-                )}
-
-                {phase === "context" && (
-                  <motion.div key="context" custom={direction} variants={variants} initial="initial" animate="active" exit="exit">
-                    <span className="text-xs font-semibold tracking-[0.08em] text-indigo-300 uppercase">Último paso</span>
-                    <h2 className="mt-2 text-2xl font-medium text-white">Un par de datos más, {name1}</h2>
-                    <p className="mt-2 text-sm text-white/60">Los usamos para personalizar tu reporte antes de mostrártelo.</p>
-
-                    <div className="mt-6">
-                      <TextField label="Empresa" value={company} onChange={setCompany} placeholder="Nombre de tu empresa" />
-                    </div>
-
-                    {industryAlreadyKnown && subcategory ? (
-                      <p className="mt-4 text-xs text-white/40">
-                        Industria: Servicios Financieros ·{" "}
-                        {FINANCIAL_SUBCATEGORY_OPTIONS.find((s) => s.value === subcategory)?.label}
-                      </p>
-                    ) : (
-                      <div className="mt-6 flex flex-col gap-2">
-                        <span className="text-xs font-semibold tracking-[0.08em] text-white/50 uppercase">
-                          Necesitamos saber el sector al que perteneces para saber qué leyes aplican
-                        </span>
-                        <div className="flex flex-wrap gap-2">
-                          {FINANCIAL_SUBCATEGORY_OPTIONS.map((opt) => (
-                            <Pill key={opt.value} active={subcategory === opt.value} onClick={() => setSubcategory(opt.value)}>
-                              {opt.label}
-                            </Pill>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="mt-8 flex gap-3">
-                      <TextureButton
-                        variant="secondary"
-                        size="lg"
-                        className="w-fit"
-                        onClick={() => {
-                          setQuestionIndex(questions.length - 1);
-                          goTo("question", -1);
-                        }}
-                      >
-                        <ArrowLeft className="size-4" aria-hidden />
-                        Atrás
-                      </TextureButton>
-                      <TextureButton
-                        variant="accent"
-                        size="lg"
-                        className="w-fit disabled:pointer-events-none disabled:opacity-40"
-                        disabled={!canContinueContext}
-                        onClick={handleContinueContext}
-                      >
-                        Ver mi reporte
-                        <ArrowRight className="size-4" aria-hidden />
-                      </TextureButton>
-                    </div>
                   </motion.div>
                 )}
 
